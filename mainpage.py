@@ -1,14 +1,14 @@
 from pyparsing import Opt
 import streamlit as st
 from presentacionif import presentacion_if
-from conversorbasesif import conversor_bases_if
-from derviadasif import derivadas_if
-from falsaposicionif import falsa_posicion_if
-from derivadadeunpolinomioif import derivada_de_un_polinomio_if
-from biseccionif import biseccion_if
-from trapeciosif import trapecios_if
-from simpson1by3if import simpson1by3_if
-from solidoderevolucionif import solidoderevolucion_if
+from convbases.conversorbasesif import conversor_bases_if
+from derivadas.derviadasif import derivadas_if
+from integrales.falsaposicionif import falsa_posicion_if
+from derivadas.derivadadeunpolinomioif import derivada_de_un_polinomio_if
+from derivadas.biseccionif import biseccion_if
+from integrales.trapeciosif import trapecios_if
+from integrales.simpson1by3if import simpson1by3_if
+from integrales.solidoderevolucionif import solidoderevolucion_if
 
 st.set_page_config(
     layout="wide",

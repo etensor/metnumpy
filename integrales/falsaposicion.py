@@ -5,7 +5,7 @@
 import numpy as np
 import sympy as sp
 from sympy.parsing.sympy_parser import parse_expr
-from derivadas import transformations
+from derivadas.derivadas import transformations
 
 # INGRESO
 x = sp.Symbol('x')

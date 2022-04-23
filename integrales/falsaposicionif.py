@@ -1,5 +1,5 @@
 import streamlit as st
-from falsaposicion import falsa_pos
+from integrales.falsaposicion import falsa_pos
 
 def falsa_posicion_if():
     funcion = st.text_input('Ingrese la función',

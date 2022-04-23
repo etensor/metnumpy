@@ -1,5 +1,5 @@
 import streamlit as st
-from derivadas import *
+from derivadas.derivadas import *
 from plotterfuncion import plot_funcion
 
 def derivadas_if():

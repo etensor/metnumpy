@@ -1,5 +1,5 @@
 import streamlit as st
-from biseccion import biseccion
+from derivadas.biseccion import biseccion
 from plotterfuncion import plot_funcion
 from sympy import lambdify, Symbol
 import numpy as np

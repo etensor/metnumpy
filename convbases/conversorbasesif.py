@@ -1,5 +1,5 @@
 import streamlit as st
-from conversorbases import conversor_bases, floatingPoint
+from convbases.conversorbases import conversor_bases, floatingPoint
 
 def conversor_bases_if():
     menu_met = st.radio('Base :',('Decimal','Binaria','Octal', 'Hexadecimal'))

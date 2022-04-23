@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 import streamlit as st
-from trapecioif import rectint
+from integrales.trapeciosif import rectint
 import numpy as np
 import sympy as sp
 from sympy.parsing.sympy_parser import parse_expr,standard_transformations, implicit_multiplication_application, transformations

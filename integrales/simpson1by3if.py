@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import streamlit as st
 import numpy as np
 import sympy as sp
-from simpson1by3 import empezar
+from integrales.simpson1by3 import empezar
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application
 
 transformations = (standard_transformations +

@@ -1,5 +1,5 @@
 import streamlit as st
-from solidoderevolucion import comenzarX
+from integrales.solidoderevolucion import comenzarX
 
 def solidoderevolucion_if():
     confirmar = True
