@@ -38,17 +38,23 @@ def derivadas_if():
             derivadas = derivadasFuncion(eq_funcion, *diff_var)
             col_spc,col_expr,col_spc2 = st.columns(3)
             
-            
             for dfdx in derivadas:
                 col_expr.latex(f"{dfdx[0]} \quad = \quad {dfdx[1]}")
 
             st.subheader('Gráficas')
-            lim_inf = int(st.slider('x min:',min_value=-100,max_value=100,value=-8))
-            lim_sup = int(st.slider('y max:', min_value=-100,max_value=100, value=8))
+            lim_inf = int(st.number_input('x min:',min_value=-100,max_value=100,value=-8))
+            lim_sup = int(st.number_input('y max:', min_value=-100,max_value=100, value=8))
+            
+            f_ltx = funcionOriginal(eq_funcion)
+            st.latex(f'f({diff_var})\;=\;' + f_ltx[1])
+            st.plotly_chart(plot_funcion(f_ltx[0], diff_var,
+                            lim_inf, lim_sup), use_container_width=True)
+
             plots = [plot_funcion(derivadas[i][2],diff_var,lim_inf,lim_sup) for i in range(len(derivadas))]
             idx = 0
+            intchr = r"'"
             for plot in plots:
-                st.latex(f'f({diff_var})\;=\;'+derivadas[idx][1])
+                st.latex(f'f{intchr*(idx+1)}({diff_var})\;=\;'+derivadas[idx][1])
                 st.plotly_chart(plot, use_container_width=True)
                 idx+=1
         
