@@ -60,3 +60,4 @@ def derivadas_if():
         
         #plot = plot_funcion('exp(x/3)*sin(x)')
         #st.plotly_chart(plot,use_container_width=True)
+    return calc_derivadas
