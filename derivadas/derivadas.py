@@ -15,7 +15,7 @@ def funcionOriginal(f):
     return f_ltx,sp.latex(f_ltx)
 
 def derivarFuncion(f, *argums):
-    f = parse_expr(f,transformations= transformations)
+    f = str(parse_expr(f,transformations= transformations))
     dfdxn = ''
     with suppress(Exception):
         dfdxn = sp.Derivative(f, *argums)
