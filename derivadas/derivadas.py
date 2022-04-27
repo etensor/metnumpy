@@ -16,7 +16,10 @@ def funcionOriginal(f):
 
 def derivarFuncion(f, *argums):
     f = parse_expr(f,transformations= transformations)
-    dfdxn = sp.Derivative(f, *argums)
+    try:
+        dfdxn = sp.Derivative(f, *argums)
+    except Exception:
+        pass
     return sp.latex(dfdxn), sp.latex(dfdxn.doit()),dfdxn.doit()
 
 
