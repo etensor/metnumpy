@@ -1,6 +1,7 @@
 import streamlit as st
 from derivadas.derivadas import *
 from plotterfuncion import plot_funcion
+from sympy import latex
 
 def derivadas_if():
     calc_derivadas = st.container()
@@ -39,7 +40,7 @@ def derivadas_if():
             col_spc,col_expr,col_spc2 = st.columns(3)
             
             for dfdx in derivadas:
-                col_expr.latex(f"{dfdx[0]} \quad = \quad {dfdx[1]}")
+                col_expr.latex(f"{latex(dfdx[0])} \quad = \quad {latex(dfdx[1])}")
 
             st.subheader('Gráficas')
             lim_inf = int(st.number_input('x min:',min_value=-100,max_value=100,value=-8))
@@ -50,11 +51,11 @@ def derivadas_if():
             st.plotly_chart(plot_funcion(f_ltx[0], diff_variables,
                             lim_inf, lim_sup), use_container_width=True)
 
-            plots = [plot_funcion(derivadas[i][2],diff_variables,lim_inf,lim_sup) for i in range(len(derivadas))]
+            plots = [plot_funcion(derivadas[i][1],diff_variables,lim_inf,lim_sup) for i in range(len(derivadas))]
             idx = 0
             intchr = r"'"
             for plot in plots:
-                st.latex(f'f{intchr*(idx+1)}({diff_variables})\;=\;'+derivadas[idx][1])
+                st.latex(f'f{intchr*(idx+1)}({diff_variables})\;=\;'+latex(derivadas[idx][1]))
                 st.plotly_chart(plot, use_container_width=True)
                 idx+=1
         
