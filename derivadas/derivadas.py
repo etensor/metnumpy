@@ -7,12 +7,15 @@ from sympy.parsing.sympy_parser import parse_expr,standard_transformations, impl
 x, y, z = sp.symbols('x y z')
 transformations = (standard_transformations + (implicit_multiplication_application,))
 
+def parsearFuncion(f):
+    return str(parse_expr(f, transformations=transformations))
+
 def funcionOriginal(f):
     f_ltx = parse_expr(f, transformations=transformations)
     return f_ltx,sp.latex(f_ltx)
 
 def derivarFuncion(f, *argums):
-    f = str(parse_expr(f,transformations= transformations))
+    f = parse_expr(f,transformations= transformations)
     dfdxn = sp.Derivative(f, *argums)
     return sp.latex(dfdxn), sp.latex(dfdxn.doit()),dfdxn.doit()
 
