@@ -11,9 +11,9 @@ def funcionOriginal(f):
     f_ltx = parse_expr(f, transformations=transformations)
     return f_ltx,sp.latex(f_ltx)
 
-def derivarFuncion(f, *args):
+def derivarFuncion(f, *argums):
     f = str(parse_expr(f,transformations= transformations))
-    dfdxn = sp.Derivative(f, *args)
+    dfdxn = sp.Derivative(f, *argumgs)
     return sp.latex(dfdxn), sp.latex(dfdxn.doit()),dfdxn.doit()
 
 
