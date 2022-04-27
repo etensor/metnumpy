@@ -10,6 +10,7 @@ from derivadas.secanteif import secante_if
 from integrales.trapeciosif import trapecios_if
 from integrales.simpson1by3if import simpson1by3_if
 from integrales.solidoderevolucionif import solidoderevolucion_if
+from integrales.newthonr import netwon_st
 
 st.set_page_config(
     layout="wide",
@@ -72,6 +73,8 @@ if opt_menu == 'Secante':
 
 if opt_menu == 'Newthon Raphson':
     st.subheader('Newthon Raphson')
+    netwon_st()
+
     
 #with open('../css/presentacion.css') as f:
 #    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)

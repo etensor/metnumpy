@@ -8,7 +8,7 @@ x, y, z = sp.symbols('x y z')
 transformations = (standard_transformations + (implicit_multiplication_application,))
 
 def parsearFuncion(f):
-    return str(parse_expr(f, transformations=transformations))
+    return parse_expr(f, transformations=transformations)
 
 def funcionOriginal(f):
     f_ltx = parse_expr(f, transformations=transformations)
