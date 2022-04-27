@@ -8,4 +8,5 @@ rich
 pyperclip
 pyfiglet
 dash
+jinja2
 plotly
