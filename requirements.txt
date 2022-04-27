@@ -1,5 +1,6 @@
 textual
 streamlit
+matplotlib
 numpy
 sympy
 ibm2ieee
