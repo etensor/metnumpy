@@ -1,0 +1,10 @@
+textual
+streamlit
+numpy
+sympy
+ibm2ieee
+rich
+pyperclip
+pyfiglet
+dash
+plotly
