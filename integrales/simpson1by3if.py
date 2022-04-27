@@ -17,7 +17,7 @@ def simpson1by3_if():
                                 value='')
     izq = int(st.slider('Limite izquierdo', min_value=0, max_value=25, value = 0))
     der = int(st.slider('Limite derecho', min_value=0, max_value=25, value = 0))
-    intervalos = int(st.number_input('Numero de intervalos',min_value=2,max_value=30, value = 2))
+    intervalos = int(st.number_input('Numero de intervalos',min_value=2,max_value=10000, value = 2))
 
     if function != "":
         function = str(parse_expr(function,transformations=transformations))

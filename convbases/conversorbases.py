@@ -450,3 +450,20 @@ def binary64ToFloat(value):
     
     hx = hex(int(value, 2))   
     return str(struct.unpack("d", struct.pack("q", int(hx, 16)))[0])
+
+def convertToInt32(mantissa_str):
+    power_count = -1
+    mantissa_int = 0
+    for i in mantissa_str:
+        mantissa_int += (int(i) * pow(2, power_count))
+        power_count -= 1
+    return (mantissa_int + 1)
+
+def ieee32_to_decimal(ieee_32):
+    sign_bit = int(ieee_32[0])
+    exponent_bias = int(ieee_32[2 : 10], 2)
+    exponent_unbias = exponent_bias - 127
+    mantissa_str = ieee_32[11 : ]
+    mantissa_int = convertToInt32(mantissa_str)
+    real_no = pow(-1, sign_bit) * mantissa_int * pow(2, exponent_unbias)
+    return str(real_no)

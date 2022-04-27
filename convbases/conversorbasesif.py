@@ -1,5 +1,5 @@
 import streamlit as st
-from convbases.conversorbases import conversor_bases, binary64ToFloat
+from convbases.conversorbases import conversor_bases, binary64ToFloat, ieee32_to_decimal
 
 def conversor_bases_if():
     menu_met = st.radio('Base :',('Decimal','Binaria','Octal', 'Hexadecimal', '32 bits', '64 bits'))
@@ -55,7 +55,7 @@ def conversor_bases_if():
 
         if base == '32 bits':
             for x in numero:
-                if x == '0' or x == '1' or ' ' and len(numero) <= 66:
+                if x == '0' or x == '1' or ' ':
                     pass
                 else:
                     denegado = True
@@ -63,11 +63,15 @@ def conversor_bases_if():
 
         if base == '64 bits':
             for x in numero:
-                if x == '0' or x == '1' or ' ' and len(numero) <= 66:
+                if x == '0' or x == '1' or ' ':
                     pass
                 else:
                     denegado = True
                     break
+        elif base == '64 bits' and len(numero) >= 3 and ((numero[1] == ' ' and numero[2] == '1') or (numero[1] == '1')):
+            pass
+        elif base == '64 bits' and (len(numero) < 3):
+            denegado = True
 
         if denegado == False:
             negativo = False
@@ -78,7 +82,7 @@ def conversor_bases_if():
                 else:
                     numero = str(float(numero) * -1.0)
 
-            if base == '32 bits' or base == '64 bits':
+            if base == '64 bits':
                 if numero[0] == '1':
                     negativo = True
                     numero = numero[1::]
@@ -87,13 +91,24 @@ def conversor_bases_if():
                     numero = numero[1::]
                     numero = numero.replace(' ', '')
 
-                if base == '64 bits':
-                    numero = binary64ToFloat(numero)
-                    print('NUMERO', numero)
-                    if numero.find('.') != -1:
-                        if float(numero[numero.find('.')+1::]) == 0:
-                            numero = numero[:numero.find('.')]
-                    base = 10
+            
+
+            if base == '32 bits':
+                print("NUMERO ORIGI ", numero)
+                numero = ieee32_to_decimal(numero)
+                print("NUMEROOO", numero)
+                if numero.find('.') != -1:
+                    if float(numero[numero.find('.')+1::]) == 0:
+                        numero = numero[:numero.find('.')]
+                        print("NUMERO", numero)
+                base = 10
+
+            if base == '64 bits':
+                numero = binary64ToFloat(numero)
+                if numero.find('.') != -1:
+                    if float(numero[numero.find('.')+1::]) == 0:
+                        numero = numero[:numero.find('.')]
+                base = 10
 
             if negativo == True:
                 #ptoflotante, expontente, mantisa = floatingPoint(float(decimal)*-1)

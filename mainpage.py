@@ -6,6 +6,7 @@ from derivadas.derviadasif import derivadas_if
 from integrales.falsaposicionif import falsa_posicion_if
 from derivadas.derivadadeunpolinomioif import derivada_de_un_polinomio_if
 from derivadas.biseccionif import biseccion_if
+from derivadas.secanteif import secante_if
 from integrales.trapeciosif import trapecios_if
 from integrales.simpson1by3if import simpson1by3_if
 from integrales.solidoderevolucionif import solidoderevolucion_if
@@ -17,12 +18,12 @@ st.set_page_config(
     menu_items={'About': "### Github:\n www.github.com/etensor/baseconvpy"}
     )
 
-st.title('Conversor de bases')
+st.title('Calculadora')
 
 
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
-    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción")
+    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson")
 )
 
 if opt_menu == 'Presentación':
@@ -65,5 +66,12 @@ if opt_menu == 'Solidos de revolción':
     st.subheader('Solidos de revolción')
     solidoderevolucion_if()
 
+if opt_menu == 'Secante':
+    st.subheader('Secante')
+    secante_if()
+
+if opt_menu == 'Newthon Raphson':
+    st.subheader('Newthon Raphson')
+    
 #with open('../css/presentacion.css') as f:
 #    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
