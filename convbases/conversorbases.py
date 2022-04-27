@@ -192,7 +192,7 @@ def binario_a_decimal(binario):
     return decimal
 
 def conversor_bases(num, base, signo):
-    if num.find('.') == -1:
+    if num.find('.') == -1 and base != '64 bits':
         binario, octal, decimal, hexadecimal = entero(num, int(base))
         if signo == '-':
             sign_bit, exp_str, mant_str = floatingPoint32(int(decimal)*-1)
@@ -227,7 +227,12 @@ def conversor_bases(num, base, signo):
         if base == 2 or base == 8 or base == 10 or base == 16:
             return proceso(num)
         else:
-            pass
+            if base == '32 bits':
+                pass
+            else:
+                frac = binary64ToFloat(num)
+                print(num + 'Sisas')
+                fraccionBinario, fraccionOctal, fraccionDecimal, fraccionHexadecimal = fraccion(frac, base)
 
 def entero(num, base):
     if base == 2:
@@ -330,9 +335,6 @@ def binaryOfFraction32(fraction):
     # Returning the binary string.
     return binary
  
-# Function to get sign  bit,
-# exp bits and mantissa bits,
-# from given real no.
 def floatingPoint32(real_no):
  
     # Setting Sign bit
@@ -435,3 +437,16 @@ def floatToBinary64(value):
     exponente = num[:11]
     significado = num[11::]
     return signo, exponente, significado
+        
+def binary64ToFloat(value):
+    import struct
+ 
+    getBin = lambda x: x > 0 and str(bin(x))[2:] or "-" + str(bin(x))[3:]
+    
+    if len(value) != 63:
+        faltan = 63 - len(value)
+        for x in range (0, faltan):
+            value = value + '0'
+    
+    hx = hex(int(value, 2))   
+    return str(struct.unpack("d", struct.pack("q", int(hx, 16)))[0])

@@ -1,5 +1,5 @@
 import streamlit as st
-from convbases.conversorbases import conversor_bases
+from convbases.conversorbases import conversor_bases, binary64ToFloat
 
 def conversor_bases_if():
     menu_met = st.radio('Base :',('Decimal','Binaria','Octal', 'Hexadecimal', '32 bits', '64 bits'))
@@ -55,7 +55,7 @@ def conversor_bases_if():
 
         if base == '32 bits':
             for x in numero:
-                if x == '0' or x == '1' or x == '2' or x == '3' or x == '4' or x == '5' or x == '6' or x == '7' or x == '8' or x == '9' or x == '-' or x == '.':
+                if x == '0' or x == '1' or ' ' and len(numero) <= 66:
                     pass
                 else:
                     denegado = True
@@ -63,22 +63,37 @@ def conversor_bases_if():
 
         if base == '64 bits':
             for x in numero:
-                if x == '0' or x == '1' or x == '2' or x == '3' or x == '4' or x == '5' or x == '6' or x == '7' or x == '8' or x == '9' or x == '-' or x == '.':
+                if x == '0' or x == '1' or ' ' and len(numero) <= 66:
                     pass
                 else:
                     denegado = True
                     break
 
-        ieee = numero
-
         if denegado == False:
             negativo = False
-            if numero[0] == '-':
+            if base != '32 bits' and base != '64 bits' and numero[0] == '-':
                 negativo = True
                 if numero.find('.') == -1:
                     numero = str(int(numero) * -1)
                 else:
                     numero = str(float(numero) * -1.0)
+
+            if base == '32 bits' or base == '64 bits':
+                if numero[0] == '1':
+                    negativo = True
+                    numero = numero[1::]
+                    numero = numero.replace(' ', '')
+                else:
+                    numero = numero[1::]
+                    numero = numero.replace(' ', '')
+
+                if base == '64 bits':
+                    numero = binary64ToFloat(numero)
+                    print('NUMERO', numero)
+                    if numero.find('.') != -1:
+                        if float(numero[numero.find('.')+1::]) == 0:
+                            numero = numero[:numero.find('.')]
+                    base = 10
 
             if negativo == True:
                 #ptoflotante, expontente, mantisa = floatingPoint(float(decimal)*-1)
