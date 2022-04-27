@@ -13,7 +13,7 @@ def funcionOriginal(f):
 
 def derivarFuncion(f, *argums):
     f = str(parse_expr(f,transformations= transformations))
-    dfdxn = sp.Derivative(f, *argumgs)
+    dfdxn = sp.Derivative(f, *argums)
     return sp.latex(dfdxn), sp.latex(dfdxn.doit()),dfdxn.doit()
 
 
