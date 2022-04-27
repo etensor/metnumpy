@@ -197,12 +197,12 @@ def conversor_bases(num, base, signo):
         if signo == '-':
             sign_bit, exp_str, mant_str = floatingPoint32(int(decimal)*-1)
             ieee_32 = str(sign_bit) + ' ' + exp_str + ' ' + mant_str
-            sign_bit64, exp_str64, mant_str64 = floatingPoint64(int(decimal)*-1)
+            sign_bit64, exp_str64, mant_str64 = floatToBinary64(int(decimal)*-1)
             ieee_64 = str(sign_bit64) + ' ' + exp_str64 + ' ' + mant_str64
         else:
             sign_bit, exp_str, mant_str = floatingPoint32(int(decimal))
             ieee_32 = str(sign_bit) + ' ' + exp_str + ' ' + mant_str
-            sign_bit64, exp_str64, mant_str64 = floatingPoint64(int(decimal))
+            sign_bit64, exp_str64, mant_str64 = floatToBinary64(int(decimal))
             ieee_64 = str(sign_bit64) + ' ' + exp_str64 + ' ' + mant_str64
         return binario, octal, decimal, hexadecimal, ieee_32, ieee_64
 
@@ -215,12 +215,12 @@ def conversor_bases(num, base, signo):
             if signo == '-':
                 sign_bit, exp_str, mant_str = floatingPoint32(float(decimal + '.' + fraccionDecimal)*-1.0)
                 ieee_32 = str(sign_bit) + ' ' + exp_str + ' ' + mant_str
-                sign_bit64, exp_str64, mant_str64 = floatingPoint64(float(decimal + '.' + fraccionDecimal)*-1.0)
+                sign_bit64, exp_str64, mant_str64 = floatToBinary64(float(decimal + '.' + fraccionDecimal)*-1.0)
                 ieee_64 = str(sign_bit64) + ' ' + exp_str64 + ' ' + mant_str64
             else:
                 sign_bit, exp_str, mant_str = floatingPoint32(float(decimal + '.' + fraccionDecimal))
                 ieee_32 = str(sign_bit) + ' ' + exp_str + ' ' + mant_str
-                sign_bit64, exp_str64, mant_str64 = floatingPoint64(float(decimal + '.' + fraccionDecimal))
+                sign_bit64, exp_str64, mant_str64 = floatToBinary64(float(decimal + '.' + fraccionDecimal))
                 ieee_64 = str(sign_bit64) + ' ' + exp_str64 + ' ' + mant_str64
             return binario + '.' + fraccionBinario, octal + '.' + fraccionOctal, decimal + '.' + fraccionDecimal, hexadecimal + '.' + fraccionHexadecimal, ieee_32, ieee_64
         
@@ -300,80 +300,6 @@ def fracciondecimal_a_fraccion(num):
         num = aux
     
     return salida[0], salida[1], salida[2]
-
-'''def floatingPoint(real_no):
- 
-    sign_bit = 0
-
-    if(real_no < 0):
-        sign_bit = 1
- 
-    real_no = abs(real_no)
-
-    int_str = bin(int(real_no))[2 : ]
-
-    fraction_str = binaryOfFraction(real_no - int(real_no))
- 
-    ind = int_str.index('1')
-
-    exp_str = bin((len(int_str) - ind - 1) + 127)[2 : ]
- 
-    mant_str = int_str[ind + 1 : ] + fraction_str
- 
-    mant_str = mant_str + ('0' * (23 - len(mant_str)))
-
-    return sign_bit, exp_str, mant_str
-
-def binaryOfFraction(fraction):
-
-    binary = str()
-
-    while (fraction):
-
-        fraction *= 2
-
-def floatingPoint(real_no):
- 
-    sign_bit = 0
- 
-    if(real_no < 0):
-        sign_bit = 1
- 
-    real_no = abs(real_no)
- 
-    int_str = bin(int(real_no))[2 : ]
- 
-    fraction_str = binaryOfFraction(real_no - int(real_no))
- 
-    ind = int_str.index('1')
- 
-    exp_str = bin((len(int_str) - ind - 1) + 127)[2 : ]
- 
-    mant_str = int_str[ind + 1 : ] + fraction_str
- 
-    mant_str = mant_str + ('0' * (23 - len(mant_str)))
-
-    return sign_bit, exp_str, mant_str
-
-def binaryOfFraction(fraction):
- 
-    binary = str()
- 
-    while (fraction):
-         
-        fraction *= 2
- 
-        if (fraction >= 1):
-            int_part = 1
-            fraction -= 1
-        else:
-            int_part = 0
-
-        binary += str(int_part)
-
-        binary += str(int_part)
- 
-    return binary'''
 
 def binaryOfFraction32(fraction):
  
@@ -462,58 +388,6 @@ def floatingPoint32(real_no):
     # and Mantissa Bit strings.
     return sign_bit, exp_str, mant_str
 
-
-def binaryOfFraction64(fraction):
-
-    binary = str()
-
-    while (fraction):
-
-        fraction *= 2
-
-def floatingPoint64(real_no):
- 
-    sign_bit = 0
- 
-    if(real_no < 0):
-        sign_bit = 1
- 
-    real_no = abs(real_no)
- 
-    int_str = bin(int(real_no))[2 : ]
- 
-    fraction_str = binaryOfFraction64(real_no - int(real_no))
- 
-    ind = int_str.index('1')
- 
-    exp_str = bin((len(int_str) - ind - 1) + 1023)[2 : ]
- 
-    mant_str = int_str[ind + 1 : ] + fraction_str
- 
-    mant_str = mant_str + ('0' * (51 - len(mant_str)))
-
-    return sign_bit, exp_str, mant_str
-
-def binaryOfFraction64(fraction):
- 
-    binary = str()
- 
-    while (fraction):
-         
-        fraction *= 2
- 
-        if (fraction >= 1):
-            int_part = 1
-            fraction -= 1
-        else:
-            int_part = 0
-
-        binary += str(int_part)
-
-        binary += str(int_part)
- 
-    return binary
-
 def convertToInt32(mantissa_str):
  
     # variable to make a count
@@ -543,13 +417,21 @@ def convertToInt32(mantissa_str):
          
     # returning mantissa in 1.M form.
     return (mantissa_int + 1)
-    
-def num32adecimal(num):
-    sign_bit = int(num[0])
-    exponent_bias = int(num[2 : 10], 2)
-    exponent_unbias = exponent_bias - 127
-    mantissa_str = num[11 : ]
-    mantissa_int = convertToInt32(mantissa_str)
-    real_no = pow(-1, sign_bit) * mantissa_int * pow(2, exponent_unbias)
-    
-    return real_no
+
+def floatToBinary64(value):
+    import struct
+    getBin = lambda x: x > 0 and str(bin(x))[2:] or "-" + str(bin(x))[3:]
+    num = str(value)
+    if num.find('-') == -1:
+        signo = '0'
+    else:
+        signo = '1'
+        num = num[1::]
+        
+    num = float(value)
+
+    val = struct.unpack('Q', struct.pack('d', value))[0]
+    num = str(getBin(val))
+    exponente = num[:11]
+    significado = num[11::]
+    return signo, exponente, significado
