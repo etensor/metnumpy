@@ -1,6 +1,6 @@
 import sympy as sp
 from sympy.parsing.sympy_parser import parse_expr,standard_transformations, implicit_multiplication_application
-
+from contextlib import suppress
 
 # Las derivadas pimpam con parser para escribirlas sin cuento
 
@@ -16,11 +16,9 @@ def funcionOriginal(f):
 
 def derivarFuncion(f, *argums):
     f = parse_expr(f,transformations= transformations)
-    dfdx = ''
-    try:
+    dfdxn = ''
+    with suppress(Exception):
         dfdxn = sp.Derivative(f, *argums)
-    except Exception:
-        pass
     return sp.latex(dfdxn), sp.latex(dfdxn.doit()),dfdxn.doit()
 
 
