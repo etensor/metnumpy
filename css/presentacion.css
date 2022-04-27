@@ -1,3 +1,8 @@
-.div.element-container.css-4wbsga.e1tzin5v3{
-    background-color: aliceblue;
+div.stAlert {
+    border-radius: 5px;
+    background-color: rgb(108, 108, 108);
+}
+
+p {
+    color: #FFFFFF;
 }
