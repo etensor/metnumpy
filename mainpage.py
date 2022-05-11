@@ -12,6 +12,8 @@ from integrales.simpson1by3if import simpson1by3_if
 from integrales.solidoderevolucionif import solidoderevolucion_if
 from integrales.newthonr import netwon_st
 
+from estilos import escoger_tema
+
 st.set_page_config(
     layout="wide",
     page_icon='🛠',
@@ -24,12 +26,16 @@ st.title('Calculadora')
 
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
-    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson")
+    ("Presentación","Configuracion","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson")
 )
+
 
 if opt_menu == 'Presentación':
     st.subheader('Presentación')
     presentacion_if()
+
+if opt_menu == 'Configuracion':
+    escoger_tema()
 
 if opt_menu == 'Conversor de bases':
     st.subheader('Conversor de bases')
