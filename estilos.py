@@ -42,13 +42,15 @@ def escoger_tema():
             file_t.write(tema_definido)
             file_t.close()
             st.success('Tema modificado!')
+            st.experimental_rerun()
 
     with reestablecer:
         if st.button('Restablecer'):
             file_t = open('.streamlit/config.toml', 'w')
             file_t.write(tema_original)
             file_t.close()
-            st.sucess('Tema reestablecido.')
+            st.success('Tema reestablecido.')
+            st.experimental_rerun()
         
 
 
