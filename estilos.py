@@ -28,7 +28,7 @@ def escoger_tema():
     with tex:
         texto_color = st.color_picker('Color de texto', '#f5f5f5')
     
-    _,aceptar,reestablecer,_ = st.columns(4)
+    _,aceptar,reestablecer,_ = st.columns([1,3,3,1])
 
     with aceptar:
         if st.button('Aplicar cambios'):
@@ -45,7 +45,7 @@ def escoger_tema():
             st.experimental_rerun()
 
     with reestablecer:
-        if st.button('Restablecer'):
+        if st.button('Restablecer config'):
             file_t = open('.streamlit/config.toml', 'w')
             file_t.write(tema_original)
             file_t.close()

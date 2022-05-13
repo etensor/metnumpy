@@ -26,7 +26,7 @@ st.title('Calculadora')
 
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
-    ("Presentación","Configuracion","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson")
+    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson")
 )
 
 
@@ -34,8 +34,9 @@ if opt_menu == 'Presentación':
     st.subheader('Presentación')
     presentacion_if()
 
-if opt_menu == 'Configuracion':
-    escoger_tema()
+    with st.sidebar:
+        with st.expander('Configuración'):
+            escoger_tema()
 
 if opt_menu == 'Conversor de bases':
     st.subheader('Conversor de bases')
