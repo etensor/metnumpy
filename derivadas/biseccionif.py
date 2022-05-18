@@ -29,7 +29,7 @@ def biseccion_if():
     with der:                
         xb = int(st.number_input('Cota superior', min_value=-
                     50, max_value=50, value=3))
-    tolerancia = int(st.number_input('Tolerancia : ',min_value=1,max_value=300,value = 7))
+    tolerancia = float(st.text_input('Tolerancia : ',value = 0.001))
     
     def f(x):
         return eval(funcion)

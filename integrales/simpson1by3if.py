@@ -15,9 +15,9 @@ def simpson1by3_if():
     #function = st.text_input("Ingresa la función")
     function = st.text_input('Ingrese la función',
                                 value='')
-    izq = int(st.slider('Limite izquierdo', min_value=0, max_value=25, value = 0))
-    der = int(st.slider('Limite derecho', min_value=0, max_value=25, value = 0))
-    intervalos = int(st.number_input('Numero de intervalos',min_value=2,max_value=10000, value = 2))
+    izq = int(st.text_input('Limite izquierdo', value = 0))
+    der = int(st.text_input('Limite derecho', value = 0))
+    intervalos = int(st.text_input('Numero de intervalos', value = 0))
 
     if function != "":
         function = str(parse_expr(function,transformations=transformations))
