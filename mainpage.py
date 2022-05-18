@@ -10,7 +10,7 @@ from derivadas.secanteif import secante_if
 from integrales.trapeciosif import trapecios_if
 from integrales.simpson1by3if import simpson1by3_if
 from integrales.solidoderevolucionif import solidoderevolucion_if
-from integrales.newthonr import netwon_st
+from integrales.newthonrif import netwon_st
 
 from estilos import escoger_tema
 
