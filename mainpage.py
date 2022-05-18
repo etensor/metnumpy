@@ -11,6 +11,7 @@ from integrales.trapeciosif import trapecios_if
 from integrales.simpson1by3if import simpson1by3_if
 from integrales.solidoderevolucionif import solidoderevolucion_if
 from integrales.newthonrif import netwon_st
+from matrices.mtr import mtr_nm,def_mtr
 
 from estilos import escoger_tema
 
@@ -26,7 +27,7 @@ st.title('Calculadora')
 
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
-    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson")
+    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson","matrices")
 )
 
 with st.sidebar:
@@ -38,7 +39,7 @@ if opt_menu == 'Presentación':
     st.subheader('Presentación')
     presentacion_if()
 
-    
+
 
 if opt_menu == 'Conversor de bases':
     st.subheader('Conversor de bases')
@@ -84,6 +85,9 @@ if opt_menu == 'Newthon Raphson':
     st.subheader('Newthon Raphson')
     netwon_st()
 
+if opt_menu == 'matrices':
+    st.subheader('Matrices')
+    def_mtr()
     
 #with open('../css/presentacion.css') as f:
 #    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
