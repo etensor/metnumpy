@@ -1,3 +1,4 @@
+from this import s
 import numpy as np
 import streamlit as st
 import sympy as sp
@@ -10,6 +11,11 @@ transformations = (standard_transformations +
 def mtr_nm(n,m):
     return np.array([[x for x in range(n)] for y in range(m)])
 
+def tex_mtr(mtr_str='',sym='A'):
+    mtr = sp.Matrix(parse_expr(mtr_str))
+    return str(f'{sym} \;= '+sp.latex(mtr))
+
+    
 
 def def_mtr(n=1,m=0):
     opcion = st.selectbox('Seleccione una opción', 
@@ -17,54 +23,49 @@ def def_mtr(n=1,m=0):
         'Sumar matrices',
         'Restar matrices',
         'Multiplicar matrices',
-        'Dividir matrices',
     
     ])
 
     operaciones = [
         lambda x,y: x+y, 
         lambda x,y: x-y, 
-        lambda x,y: x*y, 
-        lambda x,y: x/y
+        lambda x,y: x*y
         ]
     
     st.markdown(
         'Nota: El número de columnas de la matriz A debe ser igual al número de filas de la matriz B')
     
-    st.markdown(
-        'Ingrese la matriz de la forma: [[a11,a12,a13,...],[a21,a22,a23,...],[a31,a32,a33,...]]')
-    st.latex(sp.Matrix([['a11', 'a12', 'a13', '...'], [
-            'a21', 'a22', 'a23','...'], ['a31', 'a32', 'a33', '...']]))
+    st.markdown('Ingrese la matriz de la forma:')
+    st.markdown('[[a11,a12,a13,...],[a21,a22,a23,...],[a31,a32,a33,...]]')
 
     st.markdown('Ejemplo: [[1,2,3],[4,5,6]]')
 
     A_col,B_col = st.columns(2)
 
     A_col.subheader('Matriz A')
-
     
+    mtr_A = A_col.text_input('Ingrese A:', '[[a,b],[c,d]]')
+    A = sp.Matrix(parse_expr(mtr_A))
+    A_col.latex(tex_mtr(mtr_A))
 
+    B_col.subheader('Matriz B')
+    mtr_B = B_col.text_input('Ingrese B:', '[[e,f],[g,h]]')
+    B = sp.Matrix(parse_expr(mtr_B))
+    B_col.latex(tex_mtr(mtr_B,'B'))
     
-    
-
-    n = st.number_input('Ingrese el número de filas', value=1)
-    m = st.number_input('Ingrese el número de columnas', value=1)
 
     if opcion == 'Sumar matrices':
         st.subheader('Sumar matrices')
-        a = mtr_nm(n,m)
-        b = mtr_nm(n,m)
-        st.write(a)
-        st.write(b)
-        st.write(operaciones[0](a,b))
+        st.latex(sp.latex(operaciones[0](A,B)))
     
     if opcion == 'Restar matrices':
-        pass
-
-
-
-
-
+        st.subheader('Restar matrices')
+        st.latex(sp.latex(operaciones[1](A, B)))
+    
+    if opcion == 'Multiplicar matrices':
+        st.subheader('Multiplicar matrices')
+        st.latex(sp.latex(operaciones[2](A, B)))
+    
 
 
 
