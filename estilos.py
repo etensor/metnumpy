@@ -85,6 +85,9 @@ def escoger_fuente():
 
 def escoger_tema():
     st.subheader('Cambie el tema de la aplicación')
+
+
+
     tema_1,tema_2,tema_3,tema_4 = st.columns(4)
     config_actual = toml.load('.streamlit/config.toml')
 
@@ -149,11 +152,51 @@ def escoger_tema():
             file_t.close()
             st.success('Tema reestablecido.')
             st.experimental_rerun()
+
+
+'''
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 275px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+
+
+h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center; }
+
+
+p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+
+'''
+
+
+def titulo_melo(titulo : str):
+    estilo_lampara = r"""
+    <style>
+        .title h2{
+            user-select: none;
+            font-size: 28px;
+            color: #000;
+            text-align: center;
+            background: linear-gradient(to left, #FFF 30%, #005030 40%, #006040 50%, #FFF 60%);
+            background-size: 120% auto;
+            text-fill-color: transparent;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            animation: shine 30s linear infinite;
+        }
         
+        @keyframes shine {
+            0%{
+            background-position-x: 0%;
+            }
+            100%{
+            background-position-x: 600vw;
+            }
+        }
+    </style> 
+    """
 
 
+    css_ti = estilo_lampara +  """
+    <div class="title">
+        <h2>""" + titulo + """</h2>
+    </div>"""
 
-
-
-
-
+    st.markdown(css_ti, unsafe_allow_html=True)

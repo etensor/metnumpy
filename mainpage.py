@@ -13,7 +13,7 @@ from integrales.solidoderevolucionif import solidoderevolucion_if
 from integrales.newthonrif import netwon_st
 from matrices.mtr import mtr_nm,def_mtr
 
-from estilos import escoger_tema,escoger_fuente
+from estilos import escoger_tema,escoger_fuente,titulo_melo
 
 st.set_page_config(
     layout="wide",
@@ -39,6 +39,7 @@ opt_menu = st.sidebar.selectbox(
 
 with st.sidebar:
     with st.expander('Configuración'):
+        titulo_melo('Configuración')
         escoger_fuente()
         escoger_tema()
 
