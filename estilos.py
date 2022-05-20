@@ -1,32 +1,130 @@
 import streamlit as st
+import toml
 
-tema_original = '''
+tema_verde = r'''
 [theme]
 primaryColor = "#81ad90"
 backgroundColor = "#709178"
 secondaryBackgroundColor = "#a3bbad"
 textColor = "#f5f5f5"
+font="sans serif"
 
 '''
 
+tema_noche = r'''
+[theme]
+primaryColor = "#0B3B08"
+backgroundColor = "#B5B127"
+secondaryBackgroundColor = "#6A710F"
+textColor = "#000000"
+font="serif"
+
+'''
+
+tema_claro = r'''
+[theme]
+primaryColor="#6eb52f"
+backgroundColor="#f0f0f5"
+secondaryBackgroundColor="#e0e0ef"
+textColor="#262730"
+font="serif"
+
+'''
+
+tema_azul = r'''
+[theme]
+primaryColor="#006e52"
+backgroundColor="#002b36"
+secondaryBackgroundColor="#586e75"
+textColor="#fafafa"
+font="sans serif"
+
+'''
+
+
+def temas_definidos(tema : str):
+    file_t = open('.streamlit/config.toml', 'w')
+    file_t.write(tema)
+    file_t.close()
+    st.success('Tema modificado!')
+    return
+
+def cambiar_fuente(sans=True):
+    file_t = open('.streamlit/config.toml', 'r')
+    config_tema = file_t.read()
+
+    if 'font' in config_tema:
+        if sans:
+            config_tema = config_tema.replace(r'font="sans serif"', 'font="serif"')
+        else:
+            config_tema = config_tema.replace('font="serif"', r'font="sans serif"')
+
+    file_t.close()
+
+    f_config = open('.streamlit/config.toml', 'w')
+    f_config.write(config_tema)
+    f_config.close()
+    return
+
+
+def escoger_fuente():
+    st.subheader('Cambie la fuente de la aplicación')
+    fuente_1, fuente_2 = st.columns(2)
+
+    if fuente_1.button('Sans'):
+        cambiar_fuente(sans=True)
+    if fuente_2.button('Serif'):
+        cambiar_fuente(sans=False)
+    
+    #st.experimental_rerun()
+
+    
+
+
+#File_object.writelines(L) for L = [str1, str2, str3]
+
 def escoger_tema():
     st.subheader('Cambie el tema de la aplicación')
-    st.info('Mejore el estilo a su gusto.')
+    tema_1,tema_2,tema_3,tema_4 = st.columns(4)
+    config_actual = toml.load('.streamlit/config.toml')
+
+    if tema_1.button('Verde'):
+        temas_definidos(tema_verde)
+        st.experimental_rerun()
+    
+    if tema_2.button('Noche'):
+        temas_definidos(tema_noche)
+        st.experimental_rerun()
+    
+    if tema_3.button('Claro'):
+        temas_definidos(tema_claro)
+        st.experimental_rerun()
+        
+    if tema_4.button('Azul'):
+        temas_definidos(tema_azul)
+        st.experimental_rerun()
+
 
     prim,back = st.columns(2)
     sec,tex = st.columns(2)
 
+
+
     with prim:
-        color_primario = st.color_picker('Color primario: ', '#81ad90')
+        color_primario = st.color_picker('Color primario: ', 
+        config_actual['theme']['primaryColor'])
     
     with back:
-        color_background = st.color_picker('Color de fondo: ', '#709178')
+        color_background = st.color_picker('Color de fondo: ',
+        config_actual['theme']['backgroundColor'])
 
     with sec:
-        color_secundario = st.color_picker('Color secundario: ', '#a3bbad')
+        color_secundario = st.color_picker('Color secundario: ', 
+        config_actual['theme']['secondaryBackgroundColor'])
 
     with tex:
-        texto_color = st.color_picker('Color de texto', '#f5f5f5')
+        texto_color = st.color_picker('Color de texto',
+        config_actual['theme']['textColor'])
     
     _,aceptar,reestablecer,_ = st.columns([1,3,3,1])
 
@@ -47,17 +145,15 @@ def escoger_tema():
     with reestablecer:
         if st.button('Restablecer config'):
             file_t = open('.streamlit/config.toml', 'w')
-            file_t.write(tema_original)
+            file_t.write(tema_verde)
             file_t.close()
             st.success('Tema reestablecido.')
             st.experimental_rerun()
         
 
 
-#
-#[theme]
-#primaryColor = "#81ad90"
-#backgroundColor = "#709178"
-#secondaryBackgroundColor = "#a3bbad"
-#textColor = "#f5f5f5"
-#
+
+
+
+
+

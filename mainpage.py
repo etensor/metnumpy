@@ -13,14 +13,21 @@ from integrales.solidoderevolucionif import solidoderevolucion_if
 from integrales.newthonrif import netwon_st
 from matrices.mtr import mtr_nm,def_mtr
 
-from estilos import escoger_tema
+from estilos import escoger_tema,escoger_fuente
 
 st.set_page_config(
     layout="wide",
     page_icon='🛠',
     initial_sidebar_state='expanded',
-    menu_items={'About': "### Github:\n www.github.com/etensor/baseconvpy"}
+    menu_items={'About': "### Github:\n www.github.com/etensor/metnumpy"}
     )
+
+# hax css para poner st.radio horizontal y centrado
+st.write(r'''
+<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: center;} </style>
+<style>div.st-bf{flex-direction:column;} div.st-ag{padding-left:2px;}</style>
+''', unsafe_allow_html=True)
+
 
 st.title('Calculadora')
 
@@ -32,6 +39,7 @@ opt_menu = st.sidebar.selectbox(
 
 with st.sidebar:
     with st.expander('Configuración'):
+        escoger_fuente()
         escoger_tema()
 
 

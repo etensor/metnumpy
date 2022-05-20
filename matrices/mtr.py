@@ -1,4 +1,3 @@
-from this import s
 import numpy as np
 import streamlit as st
 import sympy as sp
@@ -74,9 +73,9 @@ def def_mtr(n=1,m=0):
     
     if opcion == 'Multiplicar matrices':
         st.subheader('Multiplicar matrices')
-        st.latex(sp.latex(operaciones[2](A, B)))
+        #st.latex(sp.latex(operaciones[2](A, B)))
+        equacion(operaciones[2](A, B))
     
-
 
 
 
