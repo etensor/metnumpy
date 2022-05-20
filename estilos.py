@@ -68,13 +68,35 @@ def cambiar_fuente(sans=True):
 
 
 def escoger_fuente():
-    st.subheader('Cambie la fuente de la aplicación')
-    fuente_1, fuente_2 = st.columns(2)
+    st.markdown("<h3 style='text-align: center;'> Fuente </h3>",
+                unsafe_allow_html=True)
+    fuente_1, fuente_2, fuente_3 = st.columns(3)
 
     if fuente_1.button('Sans'):
         cambiar_fuente(sans=True)
     if fuente_2.button('Serif'):
         cambiar_fuente(sans=False)
+
+    if fuente_3.button('Elegante'):
+        st.markdown(
+            """
+            <style>
+    @font-face {
+    font-family: 'Fira Code';
+    font-style: monospace;
+    font-weight: 400;
+    src: @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+    }
+
+        html, body, [class*="css"]  {
+        font-family: 'Fira Code', monospace;
+        font-size: 14px;
+        }
+        </style>
+
+        """,
+            unsafe_allow_html=True,
+        )
     
     #st.experimental_rerun()
 
@@ -84,7 +106,8 @@ def escoger_fuente():
 #File_object.writelines(L) for L = [str1, str2, str3]
 
 def escoger_tema():
-    st.subheader('Cambie el tema de la aplicación')
+    st.markdown("<h3 style='text-align: center;'>Tema</h3>",
+                unsafe_allow_html=True)
 
 
 
