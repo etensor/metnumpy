@@ -15,7 +15,12 @@ def tex_mtr(mtr_str='',sym='A'):
     mtr = sp.Matrix(parse_expr(mtr_str))
     return str(f'{sym} \;= '+sp.latex(mtr))
 
-    
+
+
+def equacion(expr,evaluar=False):
+    return st.latex(sp.latex(expr)) \
+        if not evaluar else st.latex(sp.latex(parse_expr(expr)))
+
 
 def def_mtr(n=1,m=0):
     opcion = st.selectbox('Seleccione una opción', 
@@ -45,6 +50,11 @@ def def_mtr(n=1,m=0):
     A_col.subheader('Matriz A')
     
     mtr_A = A_col.text_input('Ingrese A:', '[[a,b],[c,d]]')
+
+    #dimA_n,dimA_m = A_col.columns(2)
+
+    #a_n = int(dimA_n.text_input('Ingrese dimensiones n x m', '2'))
+    #a_m = int(dimA_m.text_input('Ingrese dimensiones n x m', '3'))
     A = sp.Matrix(parse_expr(mtr_A))
     A_col.latex(tex_mtr(mtr_A))
 
@@ -56,7 +66,7 @@ def def_mtr(n=1,m=0):
 
     if opcion == 'Sumar matrices':
         st.subheader('Sumar matrices')
-        st.latex(sp.latex(operaciones[0](A,B)))
+        st.latex(sp.latex(operaciones[0](A, B)))
     
     if opcion == 'Restar matrices':
         st.subheader('Restar matrices')
