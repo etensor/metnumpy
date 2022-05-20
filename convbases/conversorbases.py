@@ -1,11 +1,11 @@
-from ibm2ieee import ibm2float32, ibm2float64
+#from ibm2ieee import ibm2float32, ibm2float64
 
 from email.policy import strict
 import math
 import struct
 import numpy 
 #nuevo
-from ibm2ieee import ibm2float32, ibm2float64
+#from ibm2ieee import ibm2float32, ibm2float64
 
 # base(number, input_base, output_base)
 #Binario a decimal (str)

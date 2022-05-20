@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import sympy as sp
+
 import streamlit as st
-from scipy import stats
-from math import *
 
 def root(f,df,x0,tol):
     error=1e3
@@ -28,7 +26,7 @@ def graficar(f, x_i, x_f, num = 1000):
     :param num: división del intervalo
     :return: gráfica de la función
     """
-    f,df = fs(f)
+    f,df = root(f) # ??? aqui iba fs pero no se que es :(
     x = np.linspace(x_i, x_f, num)
     fig, ax = plt.subplots(figsize=(15,5))
     ax.plot(x, f(x))
