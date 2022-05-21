@@ -13,7 +13,7 @@ from integrales.solidoderevolucionif import solidoderevolucion_if
 from integrales.newthonrif import netwon_st
 from matrices.mtr import mtr_nm,def_mtr
 
-from estilos import escoger_tema,escoger_fuente,titulo_melo
+from estilos import escoger_tema,escoger_fuente,titulo_melo,titulo_melo2,config_actual
 
 
 ###     ? Configuracion de la app
@@ -36,7 +36,11 @@ st.write(r'''
 ''', unsafe_allow_html=True)
 
 
+if 'p_color' not in st.session_state:
+    st.session_state['p_color'] = config_actual['theme']['primaryColor']
 
+if 't_color' not in st.session_state:
+    st.session_state['t_color'] = config_actual['theme']['textColor']
 #st.title('Calculadora')
 st.markdown('''
  <p style="text-align: center; font-size: 36px"> Calculadora: metnumpy</p>
@@ -49,13 +53,24 @@ else:
     st.markdown(st.session_state['fuente'], unsafe_allow_html=True)
 
 
+with st.sidebar:
+    titulo_melo2('metnumpy')
+
+#st.sidebar.markdown(r'''
+#    <iframe style="font-align: center" src="https://giphy.com/embed/3owzW5c1tPq63MPmWk" 
+#    width="240" height="80" 
+#    frameBorder="0"></iframe>
+#    <br><br>
+#
+#    ''', unsafe_allow_html=True)
+
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
     ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson","matrices")
 )
 
 with st.sidebar:
-    with st.expander('Configuración',):
+    with st.expander('Configuración'):
         titulo_melo('Configuración')
         escoger_fuente()
         escoger_tema()

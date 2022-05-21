@@ -31,7 +31,7 @@ def derivadas_if():
             else:
                 diff_variables = st.text_input('Respecto a qué variable derivar, y cuantas veces:',
                     value='x,2 ; y ; z ; z',
-                    help='Utilice ; para separar argumentos, \n puede diferenciar n veces x y luego z asi: x,n;z')
+                    help='x,2 ; y <-- Derivará dos veces en x, luego una en y.')
                 diff_variables = diff_variables.split(';')
 
         with st.expander(' ',True):

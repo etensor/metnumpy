@@ -93,7 +93,7 @@ def escoger_fuente():
     
     sel_fuentes = st.selectbox('seleccione la óptima: ',
         ('Sans', 'Serif','Code','Formal','Nítida'),
-        help='Presione en [ Aplicar cambios ] para verlos aplicados.'
+        help='Presione en [ Aplicar cambios ] si los cambios no se efectuan.'
     )
 
 
@@ -156,11 +156,10 @@ def escoger_fuente():
         """
 
     
-
-
+config_actual = toml.load('.streamlit/config.toml')
 #File_object.writelines(L) for L = [str1, str2, str3]
 
-def escoger_tema():
+def escoger_tema(config = config_actual):
     st.markdown("<h3 style='text-align: center;'>Tema</h3>",
                 unsafe_allow_html=True)
 
@@ -168,7 +167,6 @@ def escoger_tema():
     tema_1,tema_2,tema_3,tema_4 = st.columns(4)
     _,tema_5,tema_6,_ = st.columns([1,2,2,1])
     config_actual = toml.load('.streamlit/config.toml')
-
     if tema_1.button('Verde'):
         temas_definidos(tema_verde)
         st.experimental_rerun()
@@ -252,11 +250,11 @@ def titulo_melo(titulo : str):
         .title h2{
             user-select: none;
             font-size: 28px;
-            color: #000;
+            color: rgb(40,40,40);
             text-align: center;
-            background: linear-gradient(to left, #FFF 30%, #005030 40%, #006040 50%, #FFF 60%);
+            background: linear-gradient(to left, rgb(40,40,40) 30%, #005030 40%, #006040 50%, rgb(40,40,40) 60%);
             background-size: 120% auto;
-            text-fill-color: transparent;
+            
             -webkit-text-fill-color: transparent;
             -webkit-background-clip: text;
             animation: shine 30s linear infinite;
@@ -280,3 +278,31 @@ def titulo_melo(titulo : str):
     </div>"""
 
     st.markdown(css_ti, unsafe_allow_html=True)
+
+
+def titulo_melo2(titulo: str):  # css es re chimba :o
+    st.markdown(r'''             
+    <style>
+    .metnum h2 {
+    font-size: 40px;
+    font-weight: 500;
+    user-select: none;
+    background: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #''' + config_actual['theme']['textColor'] + r''';
+    text-shadow:
+        -4px -2px 5px #000000,
+        3px 2px 8px #EEEEEE,
+        -16px -8px 5px '''+st.session_state['p_color']+r''',
+        0px 0px 10px '''+st.session_state['p_color']+r''',
+        0px 0px 15px '''+st.session_state['p_color']+r''',
+        0px 0px 25px '''+st.session_state['p_color']+r''';
+    text-align: center;
+    }
+    max-height: 50%;
+    </style>
+
+    <div class="metnum">
+        <h2>'''+titulo+'''</h2>
+    </div>
+    ''',unsafe_allow_html=True)
