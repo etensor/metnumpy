@@ -77,9 +77,22 @@ with st.sidebar:
         escoger_tema()
     
     with st.expander('Música'):
-        musica_file = open('extras/vivaldi-RV34_bminor.ogg', 'rb')
+        musica_file = open('extras/vivaldi-RV34_bflat.ogg', 'rb')
         sonido = musica_file.read()
+        st.markdown(r'''<style>
+            .musc p {
+                text-align: right;
+                 right; font-size: 12px;
+                }</style> <div class="musc"> <p>Vivaldi RV34 III. Largo </p> </div>''',unsafe_allow_html=True)
         st.audio(sonido, format='audio/ogg')
+        st.markdown(r'''
+        <iframe width="260" height="190" 
+        src="https://www.youtube-nocookie.com/embed/videoseries?list=PLt-bqDWZA6oo_jubLNjbkPmCgef6AZlhF" 
+        title="YouTube video player" frameborder="0" allow="accelerometer; 
+        autoplay; clipboard-write; encrypted-media; gyroscope; 
+        picture-in-picture" allowfullscreen>
+        </iframe>
+        ''',unsafe_allow_html=True)
 
 
 if opt_menu == 'Presentación':

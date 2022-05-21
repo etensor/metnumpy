@@ -31,5 +31,5 @@ def presentacion_if():
 
     st.write('\n')
     st.markdown('---')
-    st.markdown('En python hacer una gráfica responsiva de una función sigue siendo una tarea complicadisima, javascript permite animaciones elegantes, por ejemplo esta aplicación: https://graphtoy.com/')
+    st.markdown('En python hacer una gráfica responsiva de una función sigue siendo una tarea no trivial, javascript permite animaciones elegantes, por ejemplo esta aplicación: https://graphtoy.com/')
     components.iframe("https://graphtoy.com/",height=1300,scrolling=True)
