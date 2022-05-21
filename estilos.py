@@ -37,6 +37,23 @@ textColor="#fafafa"
 font="sans serif"
 '''
 
+tema_oscuro = r'''
+[theme]
+primaryColor = "#9a2100"
+backgroundColor = "#000000"
+secondaryBackgroundColor = "#191135"
+textColor = "#f6ef7a"
+font="serif"
+'''
+
+tema_matrix = r'''
+[theme]
+primaryColor = "#06af87"
+backgroundColor = "#08080e"
+secondaryBackgroundColor = "#192106"
+textColor = "#64d503"
+font="serif"
+'''
 
 
 def temas_definidos(tema : str):
@@ -149,6 +166,7 @@ def escoger_tema():
 
 
     tema_1,tema_2,tema_3,tema_4 = st.columns(4)
+    _,tema_5,tema_6,_ = st.columns([1,2,2,1])
     config_actual = toml.load('.streamlit/config.toml')
 
     if tema_1.button('Verde'):
@@ -167,6 +185,13 @@ def escoger_tema():
         temas_definidos(tema_azul)
         st.experimental_rerun()
 
+    if tema_5.button('Oscuro'):
+        temas_definidos(tema_oscuro)
+        st.experimental_rerun()
+    
+    if tema_6.button('Matrix'):
+        temas_definidos(tema_matrix)
+        st.experimental_rerun()
 
     prim,back = st.columns(2)
     sec,tex = st.columns(2)
@@ -197,7 +222,7 @@ def escoger_tema():
             fuente_conf = '"sans serif"'
             if st.session_state['fuente'] in ['"sans serif"', '"serif"']:
                 fuente_conf = st.session_state['fuente']
-            tema_definido = f'[theme]\n \
+            tema_definido = f'[theme]\n\
 primaryColor = "{color_primario}"\n\
 backgroundColor = "{color_background}"\n\
 secondaryBackgroundColor = "{color_secundario}"\n\
