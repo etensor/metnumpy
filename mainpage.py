@@ -32,7 +32,14 @@ st.set_page_config(
 # hax css para poner st.radio horizontal y centrado
 st.write(r'''
 <style>div.row-widget.stRadio > div{flex-direction:row;justify-content: center;} </style>
-<style>div.st-bf{flex-direction:column;} div.st-ag{padding-left:2px;}</style>
+<style>div.st-bf{flex-direction:column;} div.st-ag{padding-left:4px;padding-right:4px}</style>
+''', unsafe_allow_html=True)
+
+
+
+#st.title('Calculadora')
+st.markdown('''
+ <p style="text-align: center; font-size: 36px"> Calculadora: metnumpy</p>
 ''', unsafe_allow_html=True)
 
 
@@ -42,17 +49,13 @@ else:
     st.markdown(st.session_state['fuente'], unsafe_allow_html=True)
 
 
-
-st.title('Calculadora')
-
-
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
     ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson","matrices")
 )
 
 with st.sidebar:
-    with st.expander('Configuración'):
+    with st.expander('Configuración',):
         titulo_melo('Configuración')
         escoger_fuente()
         escoger_tema()

@@ -74,8 +74,9 @@ def escoger_fuente():
                 unsafe_allow_html=True)
     
     
-    sel_fuentes = st.selectbox('seleccione: ',
+    sel_fuentes = st.selectbox('seleccione la óptima: ',
         ('Sans', 'Serif','Code','Formal','Nítida'),
+        help='Presione en [ Aplicar cambios ] para verlos aplicados.'
     )
 
 
@@ -115,6 +116,7 @@ def escoger_fuente():
         font-family: 'Playfair Display', serif;
         font-size: 16px;
         }
+
         </style>
 
         """
@@ -128,7 +130,7 @@ def escoger_fuente():
     src: @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
     }
 
-        html, body, [class*="css"]  {
+        html, body,[class*="css"]  {
         font-family: 'Quicksand', sans-serif;
         font-size: 16px;
         }
@@ -144,7 +146,6 @@ def escoger_fuente():
 def escoger_tema():
     st.markdown("<h3 style='text-align: center;'>Tema</h3>",
                 unsafe_allow_html=True)
-
 
 
     tema_1,tema_2,tema_3,tema_4 = st.columns(4)
@@ -191,7 +192,7 @@ def escoger_tema():
     _,aceptar,reestablecer,_ = st.columns([1,3,3,1])
 
     with aceptar:
-        if st.button('Aplicar cambios'):
+        if st.button('Aplicar cambios',help='Guarda los cambios en el tema'):
             file_t = open('.streamlit/config.toml', 'w')
             fuente_conf = '"sans serif"'
             if st.session_state['fuente'] in ['"sans serif"', '"serif"']:
