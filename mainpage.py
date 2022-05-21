@@ -15,6 +15,13 @@ from matrices.mtr import mtr_nm,def_mtr
 
 from estilos import escoger_tema,escoger_fuente,titulo_melo
 
+
+###     ? Configuracion de la app
+
+if 'fuente' not in st.session_state:
+    st.session_state['fuente'] = '"sans serif"'
+
+
 st.set_page_config(
     layout="wide",
     page_icon='🛠',
@@ -27,6 +34,13 @@ st.write(r'''
 <style>div.row-widget.stRadio > div{flex-direction:row;justify-content: center;} </style>
 <style>div.st-bf{flex-direction:column;} div.st-ag{padding-left:2px;}</style>
 ''', unsafe_allow_html=True)
+
+
+if st.session_state['fuente'] in ['"sans serif"', '"serif"']:
+    st.markdown('')
+else:
+    st.markdown(st.session_state['fuente'], unsafe_allow_html=True)
+
 
 
 st.title('Calculadora')

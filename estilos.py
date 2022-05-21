@@ -8,7 +8,6 @@ backgroundColor = "#709178"
 secondaryBackgroundColor = "#a3bbad"
 textColor = "#f5f5f5"
 font="sans serif"
-
 '''
 
 tema_noche = r'''
@@ -17,8 +16,7 @@ primaryColor = "#0B3B08"
 backgroundColor = "#B5B127"
 secondaryBackgroundColor = "#6A710F"
 textColor = "#000000"
-font="serif"
-
+font="sans serif"
 '''
 
 tema_claro = r'''
@@ -27,8 +25,7 @@ primaryColor="#6eb52f"
 backgroundColor="#f0f0f5"
 secondaryBackgroundColor="#e0e0ef"
 textColor="#262730"
-font="serif"
-
+font="sans serif"
 '''
 
 tema_azul = r'''
@@ -38,8 +35,8 @@ backgroundColor="#002b36"
 secondaryBackgroundColor="#586e75"
 textColor="#fafafa"
 font="sans serif"
-
 '''
+
 
 
 def temas_definidos(tema : str):
@@ -55,9 +52,14 @@ def cambiar_fuente(sans=True):
 
     if 'font' in config_tema:
         if sans:
-            config_tema = config_tema.replace(r'font="sans serif"', 'font="serif"')
+            st.session_state['fuente'] = '"serif"'
+            config_tema = config_tema.replace(r'sans serif', r'serif')
         else:
-            config_tema = config_tema.replace('font="serif"', r'font="sans serif"')
+            st.session_state['fuente'] = '"sans serif"'
+            if '"sans serif"' in config_tema:
+                pass
+            else:
+                config_tema = config_tema.replace(r'serif', r'sans serif')
 
     file_t.close()
 
@@ -70,16 +72,17 @@ def cambiar_fuente(sans=True):
 def escoger_fuente():
     st.markdown("<h3 style='text-align: center;'> Fuente </h3>",
                 unsafe_allow_html=True)
-    fuente_1, fuente_2, fuente_3 = st.columns(3)
+    fuente_1, fuente_2, fuente_3, fuente_4 = st.columns(4)
 
-    if fuente_1.button('Sans'):
+    if fuente_1.button('Serif'):
         cambiar_fuente(sans=True)
-    if fuente_2.button('Serif'):
+        st.experimental_rerun()
+    if fuente_2.button('Sans'):
         cambiar_fuente(sans=False)
+        st.experimental_rerun()
 
-    if fuente_3.button('Elegante'):
-        st.markdown(
-            """
+    if fuente_3.button('Code'):
+        st.session_state['fuente']="""
             <style>
     @font-face {
     font-family: 'Fira Code';
@@ -93,12 +96,27 @@ def escoger_fuente():
         font-size: 14px;
         }
         </style>
-
-        """,
-            unsafe_allow_html=True,
-        )
+        """
+        st.experimental_rerun()
     
-    #st.experimental_rerun()
+    if fuente_4.button('Epic'):
+        st.session_state['fuente'] = """
+            <style>
+    @font-face {
+    font-family: 'Playfair Display';
+    font-style: serif;
+    font-weight: 400;
+    src: @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+    }
+
+        html, body, [class*="css"]  {
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+        }
+        </style>
+
+        """
+        st.experimental_rerun()
 
     
 
@@ -157,11 +175,15 @@ def escoger_tema():
     with aceptar:
         if st.button('Aplicar cambios'):
             file_t = open('.streamlit/config.toml', 'w')
+            fuente_conf = '"sans serif"'
+            if st.session_state['fuente'] in ['"sans serif"', '"serif"']:
+                fuente_conf = st.session_state['fuente']
             tema_definido = f'[theme]\n \
-                primaryColor = "{color_primario}"\n \
-                backgroundColor = "{color_background}"\n \
-                secondaryBackgroundColor = "{color_secundario}"\n \
-                textColor = "{texto_color}"\n'
+primaryColor = "{color_primario}"\n\
+backgroundColor = "{color_background}"\n\
+secondaryBackgroundColor = "{color_secundario}"\n\
+textColor = "{texto_color}"\n\
+font={fuente_conf}'
 
             file_t.write(tema_definido)
             file_t.close()
