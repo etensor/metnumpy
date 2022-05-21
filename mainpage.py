@@ -42,6 +42,9 @@ if 'p_color' not in st.session_state:
 if 't_color' not in st.session_state:
     st.session_state['t_color'] = config_actual['theme']['textColor']
 
+if 'b_color' not in st.session_state:
+    st.session_state['b_color'] = config_actual['theme']['backgroundColor']
+
 
 #st.title('Calculadora')
 st.markdown('''

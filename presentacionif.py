@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 
 def presentacion_if():
 
-    nombres,espacio,visaje = st.columns([2,3,5])
+    nombres,espacio,visaje = st.columns([3,1,4])
     nombres.markdown(r'''
     ---
     ##### Equipo: ''')

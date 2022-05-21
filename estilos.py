@@ -3,9 +3,9 @@ import toml
 
 tema_verde = r'''
 [theme]
-primaryColor = "#81ad90"
-backgroundColor = "#709178"
-secondaryBackgroundColor = "#a3bbad"
+primaryColor = "#e6c320"
+backgroundColor = "#355749"
+secondaryBackgroundColor = "#709580"
 textColor = "#f5f5f5"
 font="sans serif"
 '''
@@ -218,6 +218,8 @@ def escoger_tema(config = config_actual):
         if st.button('Aplicar cambios',help='Guarda los cambios en el tema'):
             file_t = open('.streamlit/config.toml', 'w')
             fuente_conf = '"sans serif"'
+            st.session_state['b_color'] = color_background
+            st.session_state['p_color'] = color_primario
             if st.session_state['fuente'] in ['"sans serif"', '"serif"']:
                 fuente_conf = st.session_state['fuente']
             tema_definido = f'[theme]\n\
