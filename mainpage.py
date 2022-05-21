@@ -41,10 +41,13 @@ if 'p_color' not in st.session_state:
 
 if 't_color' not in st.session_state:
     st.session_state['t_color'] = config_actual['theme']['textColor']
+
+
 #st.title('Calculadora')
 st.markdown('''
  <p style="text-align: center; font-size: 36px"> Calculadora: metnumpy</p>
 ''', unsafe_allow_html=True)
+
 
 
 if st.session_state['fuente'] in ['"sans serif"', '"serif"']:
@@ -53,16 +56,14 @@ else:
     st.markdown(st.session_state['fuente'], unsafe_allow_html=True)
 
 
-with st.sidebar:
+with st.sidebar:  # gif epa + titulo XD
+    st.markdown(r''' 
+        <iframe style="font-align: center; border-radius: 200px" src="https://giphy.com/embed/3owzW5c1tPq63MPmWk" 
+        width="240" height="80" 
+        frameBorder="0"></iframe>
+    ''', unsafe_allow_html=True)
     titulo_melo2('metnumpy')
-
-#st.sidebar.markdown(r'''
-#    <iframe style="font-align: center" src="https://giphy.com/embed/3owzW5c1tPq63MPmWk" 
-#    width="240" height="80" 
-#    frameBorder="0"></iframe>
-#    <br><br>
-#
-#    ''', unsafe_allow_html=True)
+  
 
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
@@ -74,6 +75,11 @@ with st.sidebar:
         titulo_melo('Configuración')
         escoger_fuente()
         escoger_tema()
+    
+    with st.expander('Música'):
+        musica_file = open('extras/vivaldi-RV34_bminor.ogg', 'rb')
+        sonido = musica_file.read()
+        st.audio(sonido, format='audio/ogg')
 
 
 if opt_menu == 'Presentación':
