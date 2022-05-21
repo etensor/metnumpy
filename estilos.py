@@ -72,16 +72,19 @@ def cambiar_fuente(sans=True):
 def escoger_fuente():
     st.markdown("<h3 style='text-align: center;'> Fuente </h3>",
                 unsafe_allow_html=True)
-    fuente_1, fuente_2, fuente_3, fuente_4 = st.columns(4)
+    
+    
+    sel_fuentes = st.selectbox('seleccione: ',
+        ('Sans', 'Serif','Code','Formal','Nítida'),
+    )
 
-    if fuente_1.button('Serif'):
+
+    if sel_fuentes == 'Serif':
         cambiar_fuente(sans=True)
-        st.experimental_rerun()
-    if fuente_2.button('Sans'):
+    if sel_fuentes == 'Sans':
         cambiar_fuente(sans=False)
-        st.experimental_rerun()
 
-    if fuente_3.button('Code'):
+    if sel_fuentes == 'Code':
         st.session_state['fuente']="""
             <style>
     @font-face {
@@ -97,9 +100,8 @@ def escoger_fuente():
         }
         </style>
         """
-        st.experimental_rerun()
     
-    if fuente_4.button('Epic'):
+    if sel_fuentes == 'Formal':
         st.session_state['fuente'] = """
             <style>
     @font-face {
@@ -116,7 +118,23 @@ def escoger_fuente():
         </style>
 
         """
-        st.experimental_rerun()
+    if sel_fuentes == 'Nítida':
+        st.session_state['fuente'] = """
+            <style>
+    @font-face {
+    font-family: 'Quicksand';
+    font-style: serif;
+    font-weight: 400;
+    src: @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+    }
+
+        html, body, [class*="css"]  {
+        font-family: 'Quicksand', sans-serif;
+        font-size: 16px;
+        }
+        </style>
+
+        """
 
     
 
