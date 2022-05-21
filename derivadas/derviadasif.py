@@ -7,7 +7,7 @@ def derivadas_if():
     calc_derivadas = st.container()
 
     with calc_derivadas:
-        col_eq,col_diff = st.columns([4,1])
+        col_eq,col_diff = st.columns([3,2])
         diff_variables = ''
 
         with col_eq:
@@ -21,7 +21,7 @@ def derivadas_if():
             st.write('Derivada en:')
             tipo_diff = st.radio(
                 '',
-                ('Una variable','Varias varibales'))
+                ('Una variable','Varias variables'))
             
             if tipo_diff == 'Una variable':
                 diff_variables = st.selectbox(
@@ -37,7 +37,7 @@ def derivadas_if():
         with st.expander(' ',True):
             st.subheader('Derivadas ')
             derivadas = derivadasFuncion(eq_funcion, *diff_variables)
-            col_spc,col_expr,col_spc2 = st.columns(3)
+            col_spc,col_expr,col_spc2 = st.columns([1,4,1])
             
             for dfdx in derivadas:
                 col_expr.latex(f"{latex(dfdx[0])} \quad = \quad {latex(dfdx[1])}")
