@@ -21,6 +21,10 @@ from estilos import escoger_tema,escoger_fuente,titulo_melo,titulo_melo2,config_
 if 'fuente' not in st.session_state:
     st.session_state['fuente'] = '"sans serif"'
 
+if 'lim_inf' not in st.session_state:    
+    st.session_state['lim_inf'] = -5
+    st.session_state['lim_sup'] = 5
+
 
 st.set_page_config(
     layout="wide",
