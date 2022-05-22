@@ -14,6 +14,7 @@ from integrales.newthonrif import netwon_st
 from matrices.mtr import mtr_nm,def_mtr
 
 from estilos import escoger_tema,escoger_fuente,titulo_melo,titulo_melo2,config_actual
+from plotterfuncion import plotter_principal
 
 
 ###     ? Configuracion de la app
@@ -112,9 +113,13 @@ if opt_menu == 'Conversor de bases':
     st.subheader('Conversor de bases')
     conversor_bases_if()
 
+if opt_menu in ('Derivadas','Falsa posición','Derivada de un polinomio',
+    'Bisección','Trapecios','Rectangulo','Simpson 1/3','Solidos de revolción','Secante','Newthon Raphson'):
+    eq_funcion, variables_f, _, _, col_diff=plotter_principal()
+
 if opt_menu == 'Derivadas':
     st.subheader('Calculadora de Derivadas')
-    derivadas_if()
+    derivadas_if(eq_funcion,col_diff)
 
 if opt_menu == 'Falsa posición':
     st.subheader('Falsa posición')

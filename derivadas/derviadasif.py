@@ -3,11 +3,11 @@ from derivadas.derivadas import *
 from plotterfuncion import plot_funcion,graficador,definir_limites,plotter_principal
 
 
-def derivadas_if():
+def derivadas_if(eq_funcion,col_diff):
     calc_derivadas = st.container()
 
     with calc_derivadas:
-        eq_funcion,variables_f,_,_,col_diff = plotter_principal()
+        #eq_funcion,variables_f,_,_,col_diff = plotter_principal()
         diff_variables = ''
         with col_diff:
             st.write('Derivada en:')
