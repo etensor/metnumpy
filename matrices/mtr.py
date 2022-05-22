@@ -27,6 +27,7 @@ def def_mtr(n=1,m=0):
         'Sumar matrices',
         'Restar matrices',
         'Multiplicar matrices',
+        'Producto Hadamard'
     
     ])
 
@@ -65,18 +66,69 @@ def def_mtr(n=1,m=0):
 
     if opcion == 'Sumar matrices':
         st.subheader('Sumar matrices')
-        st.latex(sp.latex(operaciones[0](A, B)))
+        st.latex('A+B \enskip = \enskip '+sp.latex(operaciones[0](A, B)))
     
     if opcion == 'Restar matrices':
         st.subheader('Restar matrices')
-        st.latex(sp.latex(operaciones[1](A, B)))
+        st.latex('A-B \enskip = \enskip '+sp.latex(operaciones[1](A, B)))
     
     if opcion == 'Multiplicar matrices':
         st.subheader('Multiplicar matrices')
         #st.latex(sp.latex(operaciones[2](A, B)))
-        equacion(operaciones[2](A, B))
+        st.latex('A \cdot B \enskip = \enskip '+sp.latex(operaciones[2](A, B)))
     
+    if opcion == 'Producto Hadamard':
+        st.subheader('Producto Hadamard')
+        st.latex('A \circ B \enskip = \enskip ' +
+                 sp.latex(sp.matrix_multiply_elementwise(A, B)))
+        
+        with st.expander('Más sobre Hadamard'):
+           
+            st.write('A diferencia de la multiplicación de matrices, \
+                el producto Hadamard requiere que sean de las mismas dimensiones \
+                los objetos.')
 
+            st.write('En los vectores se nota más su efecto, uno produce un escalar,\
+                 hamadard otro vector del mismo tamaño, como multiplicar cada elemento por un escalar distinto.')
+            st.latex(r'''
+            c = \vec{x}^T \cdot \vec{y} =
+        \begin{bmatrix}
+               x_{1} \\
+               x_{2} \\
+               \vdots \\
+               x_{n}
+             \end{bmatrix}^T \cdot \begin{bmatrix}
+               y_{1} \\
+               y_{2} \\
+               \vdots \\
+               y_{n}
+             \end{bmatrix} =
+        x_1, x_2, \cdots, x_n] \cdot \begin{bmatrix}
+               y_{1} \\
+               y_{2} \\
+               \vdots \\
+               y_{n}
+             \end{bmatrix} = \sum_{i=1}^n x_iy_i \in \mathbb{R}
+            ''')
+            st.latex(r'''\vec{z} = \vec{x} \odot \vec{y} =
+            \begin{bmatrix}
+               x_{1} \\
+               x_{2} \\
+               \vdots \\
+               x_{n}
+             \end{bmatrix} \odot \begin{bmatrix}
+               y_{1} \\
+               y_{2} \\
+               \vdots \\
+               y_{n}
+             \end{bmatrix} =  \begin{bmatrix}
+               x_1y_{1} \\
+               x_2y_{2} \\
+               \vdots \\
+               x_ny_{n}
+             \end{bmatrix} \in \mathbb{R}^n
+
+            ''')
 
 
 #def def_mtr():
