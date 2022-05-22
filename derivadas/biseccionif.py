@@ -11,10 +11,14 @@ from sympy.parsing.sympy_parser import parse_expr, standard_transformations, imp
 transformations = (standard_transformations +
                    (implicit_multiplication_application,))
 
+from plotterfuncion import plotter_principal
+
 
 def biseccion_if():
+    eq_funcion, variables_f, _, _, col_diff = plotter_principal()
     value = 'sp.cos(x)-math.exp(-x**2) + 0.5'
     funcion = st.text_input('Ingrese la función f(x) :',value = value)
+    
     x = Symbol('x')
 
     #funcion = lambdify(x,str(parse_expr(funcion, transformations=transformations)),'numpy')

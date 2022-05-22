@@ -6,6 +6,8 @@ import pandas as pd
 import streamlit as st
 from derivadas.derivadas import funcionOriginal,parsearFuncion
 
+# 3D: f(x,y) =  2y*cos(x/3)sin(3x)
+
 x,y,z,t,w,r = sp.symbols('x y z t w r')
 
 def hex_rgba(c_hex: str = '',opa=0):
@@ -30,6 +32,31 @@ def definir_limites():
        'x min:',value='-8.0')))
     st.session_state['lim_sup'] = float(parsearFuncion(st.text_input(
        'x max:', value='8.0')))
+
+
+
+
+def plotter_principal(): # streamlit componente 
+    col_eq, col_lims,col_ctrl = st.columns([2.5, 2, 2])
+    with col_eq:
+        st.write('\n')
+        eq_funcion = st.text_input(
+            #'Ingrese función: ', value='cos(xy) + 3x**3*y**-3 z**2 - sin(xz)')
+            'Ingrese función: ', value='cos(x/4)sin(5x)')
+        variables_f = st.text_input(
+            'variables: ', value='x', help='Ingrese qué variables están en la función, separadas por coma.')
+
+    with col_lims:
+        st.write('\n')
+        definir_limites()
+
+    try:
+        graficador(eq_funcion, variables_f)
+    except:
+        st.warning('No se pudo gráficar la función, revisa los parámetros ingresados.')
+
+    return eq_funcion,variables_f,col_eq,col_lims,col_ctrl
+
 
 
 def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,auto_fondo= True,idx=0):  # funciona unicamente 2D]
@@ -72,6 +99,7 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
         y=df.loc[:, 'y'],
         marker_color=st.session_state['p_color'],
         mode='lines',
+        line=dict(width=3)
     ))
 
     return fig

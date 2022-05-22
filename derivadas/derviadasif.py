@@ -1,25 +1,14 @@
 import streamlit as st
 from derivadas.derivadas import *
-from plotterfuncion import plot_funcion,graficador,definir_limites
-from sympy import latex
+from plotterfuncion import plot_funcion,graficador,definir_limites,plotter_principal
+
 
 def derivadas_if():
     calc_derivadas = st.container()
 
     with calc_derivadas:
-        col_eq,col_lims,col_diff = st.columns([2.5,2,2])
+        eq_funcion,variables_f,_,_,col_diff = plotter_principal()
         diff_variables = ''
-
-        with col_eq:
-            st.write('\n')
-            eq_funcion = st.text_input(
-                #'Ingrese función: ', value='cos(xy) + 3x**3*y**-3 z**2 - sin(xz)')
-                'Ingrese función: ', value='cos(x/4)sin(5x)')
-            variables_f  = st.text_input('variables: ', value='x',help='Ingrese qué variables están en la función,separadas por coma.')
-        
-        with col_lims:
-            definir_limites()
-
         with col_diff:
             st.write('Derivada en:')
             tipo_diff = st.radio(
@@ -37,12 +26,8 @@ def derivadas_if():
                     help='x,2 ; y <-- Derivará dos veces en x, luego una en y.')
                 diff_variables = diff_variables.split(';')
 
-
         st.write('\n')
-        try:
-            graficador(eq_funcion,variables_f)
-        except:
-            st.warning('No se pudo gráficar la función, revisa los parámetros ingresados.')
+         
 
         with st.expander(' ',True):
             st.subheader('Derivadas ')
@@ -51,7 +36,7 @@ def derivadas_if():
             col_spc,col_expr,col_spc2 = st.columns([0.2,4,0.2])
             
             for dfdx in derivadas:
-                col_expr.latex(f"{latex(dfdx[0])} \quad = \quad {latex(dfdx[1])}")
+                col_expr.latex(f"{sp.latex(dfdx[0])} \enskip = \enskip {sp.latex(dfdx[1])}")
             st.subheader('Gráficas')
             
             try:
@@ -59,7 +44,7 @@ def derivadas_if():
                 idx = 0
                 intchr = r"'"
                 for plot in plots:
-                    st.latex(f'f{intchr*(idx+1)}({diff_variables})\;=\;'+latex(derivadas[idx][1]))
+                    st.latex(f'f{intchr*(idx+1)}({diff_variables})\;=\;'+sp.latex(derivadas[idx][1]))
                     st.plotly_chart(plot, use_container_width=True)
                     idx+=1
             except:
