@@ -1,27 +1,19 @@
 import streamlit as st
 from derivadas.derivadas import *
-from plotterfuncion import plot_funcion
-from sympy import latex
+from plotterfuncion import plot_funcion,graficador,definir_limites,plotter_principal
 
-def derivadas_if():
+
+def derivadas_if(eq_funcion,col_diff):
     calc_derivadas = st.container()
 
     with calc_derivadas:
-        col_eq,col_diff = st.columns([4,1])
+        #eq_funcion,variables_f,_,_,col_diff = plotter_principal()
         diff_variables = ''
-
-        with col_eq:
-            st.write('\n')
-            st.write('\n')
-            eq_funcion = st.text_input(
-                #'Ingrese función: ', value='cos(xy) + 3x**3*y**-3 z**2 - sin(xz)')
-                'Ingrese función: ', value='cos(x/4)sin(5x)')
-
         with col_diff:
             st.write('Derivada en:')
             tipo_diff = st.radio(
                 '',
-                ('Una variable','Varias varibales'))
+                ('Una variable','Varias variables'))
             
             if tipo_diff == 'Una variable':
                 diff_variables = st.selectbox(
@@ -31,33 +23,32 @@ def derivadas_if():
             else:
                 diff_variables = st.text_input('Respecto a qué variable derivar, y cuantas veces:',
                     value='x,2 ; y ; z ; z',
-                    help='Utilice ; para separar argumentos, \n puede diferenciar n veces x y luego z asi: x,n;z')
+                    help='x,2 ; y <-- Derivará dos veces en x, luego una en y.')
                 diff_variables = diff_variables.split(';')
+
+        st.write('\n')
+         
 
         with st.expander(' ',True):
             st.subheader('Derivadas ')
+
             derivadas = derivadasFuncion(eq_funcion, *diff_variables)
-            col_spc,col_expr,col_spc2 = st.columns(3)
+            col_spc,col_expr,col_spc2 = st.columns([0.2,4,0.2])
             
             for dfdx in derivadas:
-                col_expr.latex(f"{latex(dfdx[0])} \quad = \quad {latex(dfdx[1])}")
-
+                col_expr.latex(f"{sp.latex(dfdx[0])} \enskip = \enskip {sp.latex(dfdx[1])}")
             st.subheader('Gráficas')
-            lim_inf = int(st.number_input('x min:',min_value=-100,max_value=100,value=-8))
-            lim_sup = int(st.number_input('y max:', min_value=-100,max_value=100, value=8))
             
-            f_ltx = funcionOriginal(eq_funcion)
-            st.latex(f'f({diff_variables})\;=\;' + f_ltx[1])
-            st.plotly_chart(plot_funcion(f_ltx[0], diff_variables,
-                            lim_inf, lim_sup), use_container_width=True)
-
-            plots = [plot_funcion(derivadas[i][1],diff_variables,lim_inf,lim_sup) for i in range(len(derivadas))]
-            idx = 0
-            intchr = r"'"
-            for plot in plots:
-                st.latex(f'f{intchr*(idx+1)}({diff_variables})\;=\;'+latex(derivadas[idx][1]))
-                st.plotly_chart(plot, use_container_width=True)
-                idx+=1
+            try:
+                plots = [plot_funcion(derivadas[i][1],diff_variables,st.session_state['lim_inf'],st.session_state['lim_sup'],idx=i+1) for i in range(len(derivadas))]
+                idx = 0
+                intchr = r"'"
+                for plot in plots:
+                    st.latex(f'f{intchr*(idx+1)}({diff_variables})\;=\;'+sp.latex(derivadas[idx][1]))
+                    st.plotly_chart(plot, use_container_width=True)
+                    idx+=1
+            except:
+                st.warning('Depronto los parámetros de la función, o de la diferenciación no son correctos.')
         
         #plot = plot_funcion('exp(x/3)*sin(x)')
         #st.plotly_chart(plot,use_container_width=True)

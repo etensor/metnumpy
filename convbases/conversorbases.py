@@ -1,11 +1,8 @@
-from ibm2ieee import ibm2float32, ibm2float64
+#from ibm2ieee import ibm2float32, ibm2float64
 
-from email.policy import strict
-import math
 import struct
-import numpy 
 #nuevo
-from ibm2ieee import ibm2float32, ibm2float64
+#from ibm2ieee import ibm2float32, ibm2float64
 
 # base(number, input_base, output_base)
 #Binario a decimal (str)
@@ -421,7 +418,6 @@ def convertToInt32(mantissa_str):
     return (mantissa_int + 1)
 
 def floatToBinary64(value):
-    import struct
     getBin = lambda x: x > 0 and str(bin(x))[2:] or "-" + str(bin(x))[3:]
     num = str(value)
     if num.find('-') == -1:
@@ -439,7 +435,6 @@ def floatToBinary64(value):
     return signo, exponente, significado
         
 def binary64ToFloat(value):
-    import struct
  
     getBin = lambda x: x > 0 and str(bin(x))[2:] or "-" + str(bin(x))[3:]
     

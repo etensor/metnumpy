@@ -10,4 +10,4 @@ pyfiglet
 dash
 jinja2
 plotly
-scipy
+toml

@@ -14,12 +14,16 @@ def funcionOriginal(f):
     f_ltx = parse_expr(f, transformations=transformations)
     return f_ltx,sp.latex(f_ltx)
 
+
+#  Retorna la derivada como expresión y como resultado
 def derivarFuncion(f, *argums):
     f = str(parse_expr(f,transformations= transformations))
     dfdxn = sp.Derivative(f, *argums)
     return dfdxn, dfdxn.doit()
 
 
+#   Retorna las primeras 3 derivadas de la funcion sobre un único primer argumento
+#   o las derivadas parciales en orden consecutivo
 def derivadasFuncion(f,*args):
     return [derivarFuncion(f, f'{args[0]},{i}') for i in range(1, 4)] \
         if len(args) == 1 else \
