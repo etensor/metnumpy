@@ -23,19 +23,17 @@ def biseccion_if():
     izq,der = st.columns(2)
     
     with izq:
-        xa = int(st.number_input('Cota inferior',
-                      min_value=-50, max_value=50, value=-2))
+        xa = int(st.text_input('Cota inferior', value=-2))
     
     with der:                
-        xb = int(st.number_input('Cota superior', min_value=-
-                    50, max_value=50, value=3))
+        xb = int(st.text_input('Cota superior', value=3))
     tolerancia = float(st.text_input('Tolerancia : ',value = 0.001))
     
     def f(x):
         return eval(funcion)
 
     iter =0
-    f_c = 999999
+    f_c = int(999999)
 
     while abs(f_c)>=tolerancia:
         puntoMedio = (xa + xb)/2
@@ -43,7 +41,22 @@ def biseccion_if():
         f_b = f(xb)
         f_c = f(puntoMedio)
         iter += 1
-        st.write("xa:", xa,"xb: ", xb,"c: ", puntoMedio, "f_c: ", f_c, "N.iter: ", iter) 
+        u,d,t,c,s = st.columns(5)
+    
+        with u:
+             st.write("xa:", xa)
+        
+        with d:
+            st.write("xb:", xb)
+            
+        with t:
+            st.write("c:", puntoMedio)
+        with c:
+            st.write("f_c:",f_c)
+        with s:
+            st.write("Iter",iter)
+        
+        #st.write("xa:", xa,"xb: ", xb,"c: ", puntoMedio, "f_c: ", f_c, "N.iter: ", iter) 
 
         if (f_a * f_c)<0:
             xb = puntoMedio
