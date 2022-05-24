@@ -5,7 +5,6 @@ from math import *
 from sympy.parsing.sympy_parser import parse_expr
 from derivadas.derivadas import transformations
 from integrales.newthonr import root
-from scipy import stats
 
 def netwon_st():
   x = sp.Symbol('x')
