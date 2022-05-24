@@ -23,19 +23,13 @@ def simpson1by3_if():
         function = str(parse_expr(function,transformations=transformations))
         funcion = sp.lambdify(x,function,'numpy')
 
-    if intervalos % 2 != 0:
-        st.write('El numero de intervalos no debe ser impar')
-        confirmar = False
-    else:
-        confirmar = True
-
     if izq >= der:
         st.write('El limite izquierdo no puede ser mayor al derecho')
         pasar = False
     else:
         pasar = True
     
-    if confirmar and pasar and function != '':
+    if pasar and function != '':
         resultado = empezar(function, izq, der, intervalos)
 
         st.success(f'Valor integral definido: {resultado}')
