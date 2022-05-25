@@ -24,7 +24,7 @@ def equacion(expr,evaluar=False):
 def def_mtr(n=1,m=0):
     opcion = st.selectbox('Seleccione una opción', 
     [
-        'Sumarrrrrrrrrrrr matrices',
+        'Sumar matrices',
         'Restar matrices',
         'Multiplicar matrices',
         'Producto Hadamard'
