@@ -50,11 +50,11 @@ def trapecios_if():
     area = h*(suma/2)
 
     # SALIDA
-    col_expr, col_vals = st.columns(2)
-    col_vals.write(' Particion:')
-    st.write(particiones)
-    col_vals.write(' Integral:')
-    st.write(area)
+    #col_expr, col_vals = st.columns(2)
+    #st.write('Particion:')
+    #col_vals.write('Integral:')
+    st.write("Valor integral definido: ", area)
+    st.write("Intervalo: [", a, ", ", b, "]")
 
 
     # GRAFICA

@@ -29,10 +29,11 @@ def simpson1by3_if():
     else:
         pasar = True
     
-    if pasar and function != '':
+    if pasar and function != '' and intervalos > 0:
         resultado = empezar(function, izq, der, intervalos)
 
         st.success(f'Valor integral definido: {resultado}')
+        st.write("Intervalo: [", izq, ", ", der, "]")
 
         muestras = intervalos + 1
         xi = np.linspace(izq,der,muestras)

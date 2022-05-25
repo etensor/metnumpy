@@ -12,6 +12,7 @@ from integrales.simpson1by3if import simpson1by3_if
 from integrales.solidoderevolucionif import solidoderevolucion_if
 from integrales.newthonrif import netwon_st
 from matrices.mtr import mtr_nm,def_mtr
+from integrales.minimocudradoif import minimo_cuadrado_if
 
 from estilos import escoger_tema,escoger_fuente,titulo_melo,titulo_melo2,config_actual
 from plotterfuncion import plotter_principal
@@ -75,7 +76,7 @@ with st.sidebar:  # gif epa + titulo XD
 
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
-    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Solidos de revolción","Secante","Newthon Raphson","matrices")
+    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Minimo cuadrado", "Solidos de revolción","Secante","Newthon Raphson","matrices")
 )
 
 with st.sidebar:
@@ -114,7 +115,7 @@ if opt_menu == 'Conversor de bases':
     conversor_bases_if()
 
 if opt_menu in ('Derivadas','Falsa posición','Derivada de un polinomio',
-    'Bisección','Trapecios','Rectangulo','Simpson 1/3','Solidos de revolción','Secante','Newthon Raphson'):
+    'Bisección','Trapecios','Rectangulo','Simpson 1/3', 'Minimo cuadrado', 'Solidos de revolción','Secante','Newthon Raphson'):
     eq_funcion, variables_f, _, _, col_diff=plotter_principal()
 
 if opt_menu == 'Derivadas':
@@ -144,6 +145,10 @@ if opt_menu == 'Rectangulo':
 if opt_menu == 'Simpson 1/3':
     st.subheader('Simpson 1/3')
     simpson1by3_if()
+
+if opt_menu == 'Minimo cuadrado':
+    st.subheader('Minimo cuadrado')
+    minimo_cuadrado_if()
 
 if opt_menu == 'Solidos de revolción':
     st.subheader('Solidos de revolción')
