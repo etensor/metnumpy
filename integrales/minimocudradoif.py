@@ -17,10 +17,7 @@ def minimo_cuadrado_if():
             x[i] = float(x[i])
         for i in range(0, len(y)):
             y[i] = float(y[i])
-
-        print(x)
-        print(y)
-
+            
         parameter = liner_fitting(x,y)
         draw_data = calculate(x,parameter[0],parameter[1])
         draw(x,draw_data,y)
