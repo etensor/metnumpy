@@ -17,9 +17,10 @@ def funcionOriginal(f):
 
 #  Retorna la derivada como expresión y como resultado
 def derivarFuncion(f, *argums):
-    f = str(parse_expr(f,transformations= transformations))
+    f = parse_expr(f,transformations= transformations)
     dfdxn = sp.Derivative(f, *argums)
-    return dfdxn, dfdxn.doit()
+    dfdxn_op = dfdxn.doit()
+    return dfdxn, dfdxn_op
 
 
 #   Retorna las primeras 3 derivadas de la funcion sobre un único primer argumento
