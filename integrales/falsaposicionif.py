@@ -2,6 +2,7 @@ import streamlit as st
 from integrales.falsaposicion import falsa_pos
 
 def falsa_posicion_if():
+    st.markdown('Nota: Ingresa la funcion, rangos (inferior, superior) y tolerancia.')
     funcion = st.text_input('Ingrese la función',
                             value='exp(x-2)-log(x) -2.5')
     a = int(st.text_input('Ingrese rango inferior: ',value='3'))
@@ -22,7 +23,7 @@ def falsa_posicion_if():
     col_vals.write('\n')
     col_vals.write(' raiz encontrada')
     
-
+ 
     for i in range(0, len(tabla)):
         st.write('------------------------------------------------------')
         col_expr.write(f'Iteración #: {i+1} ')

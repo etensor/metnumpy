@@ -2,6 +2,7 @@ import streamlit as st
 from convbases.conversorbases import conversor_bases, binary64ToFloat, ieee32_to_decimal
 
 def conversor_bases_if():
+    st.markdown('Nota: Selecciona la base a la que desea y en el recuadro pon el numero deacuerdo a su base')
     menu_met = st.radio('Base :',('Decimal','Binaria','Octal', 'Hexadecimal', '32 bits', '64 bits'))
     #Bases
     if menu_met == 'Binaria':
