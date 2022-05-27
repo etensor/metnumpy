@@ -20,6 +20,9 @@ def hex_rgba(c_hex: str = '',opa=0):
     return rgba_str      # hax que encontre por ahi, mucho visaje para darle transparencia al color de fondo... 
     
 
+def pd_json(df):
+    return df.to_json()
+
 
 def graficador(eq_funcion,diff_variables):
     f_ltx = funcionOriginal(eq_funcion)
@@ -33,7 +36,9 @@ def graficador_3(eq_funcion,diff_variables):
     f_ltx = funcionOriginal(eq_funcion)
     st.latex(f'f({diff_variables})\;=\;' + f_ltx[1])
     return st.plotly_chart(plot_funciones(f_ltx[0], diff_variables,
-                                        st.session_state['lim_inf'], st.session_state['lim_sup']), use_container_width=True)
+                                        st.session_state['lim_inf'],
+                                        st.session_state['lim_sup']), 
+                                        use_container_width=True)
 
 
 
@@ -59,6 +64,7 @@ def plotter_principal(): # streamlit componente
             'Ingrese función: ', value='cos(x/4)sin(5x)')
         variables_f = st.text_input(
             'variables: ', value='x', help='Ingrese qué variables están en la función, separadas por coma.')
+
 
     with col_lims:
         st.write('\n')
@@ -96,7 +102,7 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
             f = sp.lambdify(sp.symbols(diff_var), f, 'numpy')     # ya recibe simbolos
             
     
-    xs = np.linspace(xa, xb, 600)
+    xs = np.linspace(xa, xb, 800)
     df = pd.DataFrame(
         dict(
             x=xs,
@@ -135,8 +141,6 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba('+','.join([str(c) for c in c_fondo]
                                       ) + ')' if auto_fondo else '#AAAAAA',
-        yaxis_title='f'+'\'' *
-        (idx)+f"({str(diff_var[0])})" if idx > 0 else f"f({str(diff_var[0])})",
         xaxis_title=str(diff_var[0]),
         yaxis_titlefont=dict(size=20),
         xaxis_titlefont=dict(size=20)
@@ -145,22 +149,26 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
 
     if modo:
         # ya recibe simbolos
-        syms = sp.symbols(diff_var)
-        dfdx = sp.lambdify(sp.symbols(diff_var[0]),sp.diff(f, diff_var[0]),'numpy')
-        F = sp.lambdify(sp.symbols(diff_var[0]),sp.integrate(f, diff_var[0]),'numpy')
-        f = sp.lambdify(sp.symbols(diff_var[0]), f, 'numpy')
+        dfdx = sp.lambdify(*diff_var,sp.diff(f,*diff_var),'numpy')
+        F = sp.lambdify(*diff_var,sp.integrate(f,sp.symbols(diff_var[0])),'numpy')
+        f = sp.lambdify(*diff_var, f, 'numpy')
         
         
 
     xs = np.linspace(xa, xb, 600)
+
+    # Datos -> tabla para la gráfica
     df = pd.DataFrame(
         dict(
             x=xs,
             y=f(xs),
+            integral=F(xs),
+            derivada=dfdx(xs)
         )
     )
     # rename para darle label de la variable que usa.
     df[f'{diff_var[0]}'] = df.pop('x')
+    # tocara validar cada argumento ? <== espera orden x,y?
 
     fig.update_layout(
         margin=dict(t=16),
@@ -168,26 +176,31 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
 
     fig.add_trace(go.Scatter(
         x=df.loc[:, f'{diff_var[0]}'],
-        y=F(xs),
+        y=df.loc[:, 'integral'],
         marker_color=st.session_state['p_color'],
         mode='lines',
-        line=dict(width=3)
+        line=dict(width=2),
+        name='F(x)',
+
     ))
     fig.add_trace(go.Scatter(
         x=df.loc[:, f'{diff_var[0]}'],
-        y=dfdx(xs),
+        y=df.loc[:, 'derivada'],
         #marker_color="",
         mode='lines',
-        line=dict(width=3)
+        line=dict(width=2),
+        name='f\'(x)',
     ))
     fig.add_trace(go.Scatter(
-
         x=df.loc[:, f'{diff_var[0]}'],
-        y=df.loc[:, 'y_int'],
+        y=df.loc[:, 'y'],
         #marker_color=st.session_state['p_color'],
         mode='lines',
-        line=dict(width=3)
+        line=dict(width=2),
+        name='f(x)',
     ))
+    
+    #st.session_state['df_plots'] = df
 
     return fig
 

@@ -48,7 +48,8 @@ def derivadas_if(eq_funcion,col_diff):
                     st.plotly_chart(plot, use_container_width=True)
                     idx+=1
             except:
-                st.warning('Depronto los parámetros de la función, o de la diferenciación no son correctos.')
+                st.warning('La función no se puede gráficar ahora, \
+                    puede que los paramétros de la función o de diferenciación no sean correctos.')
         
         #plot = plot_funcion('exp(x/3)*sin(x)')
         #st.plotly_chart(plot,use_container_width=True)

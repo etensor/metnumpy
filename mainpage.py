@@ -15,7 +15,7 @@ from matrices.mtr import mtr_nm,def_mtr
 from integrales.minimocudradoif import minimo_cuadrado_if
 
 from estilos import escoger_tema,escoger_fuente,titulo_melo,titulo_melo2,config_actual
-from plotterfuncion import plotter_principal
+from plotterfuncion import plotter_principal,pd_json
 
 
 ###     ? Configuracion de la app
@@ -51,6 +51,13 @@ if 't_color' not in st.session_state:
 if 'b_color' not in st.session_state:
     st.session_state['b_color'] = config_actual['theme']['backgroundColor']
 
+# una vez grafique recordara que funcion trata,
+#   # Podemos usar esto para aplicar las mismas funciones
+#   # a diferentes metodos sin reescribirlos! :o :D
+#  requeriria un refactoring minimo
+#if 'df_plots' not in st.session_state:
+#    st.session_state['df_plots'] = {}
+
 
 #st.title('Calculadora')
 st.markdown('''
@@ -80,6 +87,9 @@ opt_menu = st.sidebar.selectbox(
 )
 
 with st.sidebar:
+    #if st.sidebar.checkbox("Datos de la función", value=False):
+        #st.dataframe(st.session_state['df_plots'])
+
     with st.expander('Configuración'):
         titulo_melo('Configuración')
         escoger_fuente()

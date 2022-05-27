@@ -1,6 +1,6 @@
 import sympy as sp
-from sympy.parsing.sympy_parser import parse_expr,standard_transformations, implicit_multiplication_application
-
+from sympy.parsing.sympy_parser import (implicit_multiplication_application,
+                                        parse_expr, standard_transformations)
 
 # Las derivadas pimpam con parser para escribirlas sin cuento
 
@@ -19,8 +19,7 @@ def funcionOriginal(f):
 def derivarFuncion(f, *argums):
     f = parse_expr(f,transformations= transformations)
     dfdxn = sp.Derivative(f, *argums)
-    dfdxn_op = dfdxn.doit()
-    return dfdxn, dfdxn_op
+    return dfdxn, dfdxn.doit()
 
 
 #   Retorna las primeras 3 derivadas de la funcion sobre un único primer argumento
@@ -33,7 +32,7 @@ def derivadasFuncion(f,*args):
 
 def integrarFuncion(f, *args):
     F = sp.Integral(f, *args)
-    return sp.latex(F), sp.latex(F.doit())
+    return F, F.doit()
 
 
 def integrarFDef(f, lims: tuple):   # *lims -> (x,x0,xf) <- inf === oo
