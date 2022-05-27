@@ -11,3 +11,4 @@ dash
 jinja2
 plotly
 toml
+pyparsing
