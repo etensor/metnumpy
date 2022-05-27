@@ -40,6 +40,9 @@ def integrarFDef(f, lims: tuple):   # *lims -> (x,x0,xf) <- inf === oo
     return res
 
 
+
+## para las integrales impropias
+
 def limF(f, xo, dir='+'):             # predet: lim x->xo+
     return sp.limit(f, xo, dir) if f.subs(x, xo) == sp.nan else f.subs(x, xo)
 

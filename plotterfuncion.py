@@ -20,6 +20,7 @@ def hex_rgba(c_hex: str = '',opa=0):
     return rgba_str      # hax que encontre por ahi, mucho visaje para darle transparencia al color de fondo... 
     
 
+
 def graficador(eq_funcion,diff_variables):
     f_ltx = funcionOriginal(eq_funcion)
     st.latex(f'f({diff_variables})\;=\;' + f_ltx[1])
@@ -27,11 +28,24 @@ def graficador(eq_funcion,diff_variables):
                 st.session_state['lim_inf'], st.session_state['lim_sup']), use_container_width=True)
 
 
+
+def graficador_3(eq_funcion,diff_variables):
+    f_ltx = funcionOriginal(eq_funcion)
+    st.latex(f'f({diff_variables})\;=\;' + f_ltx[1])
+    return st.plotly_chart(plot_funciones(f_ltx[0], diff_variables,
+                                        st.session_state['lim_inf'], st.session_state['lim_sup']), use_container_width=True)
+
+
+
+
 def definir_limites():
     st.session_state['lim_inf'] = float(parsearFuncion(st.text_input(
        'x min:',value='-8.0')))
     st.session_state['lim_sup'] = float(parsearFuncion(st.text_input(
        'x max:', value='8.0')))
+
+
+
 
 
 
@@ -49,9 +63,13 @@ def plotter_principal(): # streamlit componente
     with col_lims:
         st.write('\n')
         definir_limites()
+        sola = st.checkbox('Gráfica sola', value=True,help='Con integral y derivada')
 
     try:
-        graficador(eq_funcion, variables_f)
+        if sola:
+            graficador(eq_funcion, variables_f)
+        else:
+            graficador_3(eq_funcion, variables_f)
     except:
         st.warning('No se pudo gráficar la función, revisa los parámetros ingresados.')
 
@@ -106,6 +124,72 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
 
     #return fig
 
+
+# funciona unicamente 2D]
+
+def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=True, auto_fondo=True, idx=0):
+
+    c_fondo = hex_rgba(opa=128)
+
+    layoutF = go.Layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba('+','.join([str(c) for c in c_fondo]
+                                      ) + ')' if auto_fondo else '#AAAAAA',
+        yaxis_title='f'+'\'' *
+        (idx)+f"({str(diff_var[0])})" if idx > 0 else f"f({str(diff_var[0])})",
+        xaxis_title=str(diff_var[0]),
+        yaxis_titlefont=dict(size=20),
+        xaxis_titlefont=dict(size=20)
+    )
+    fig = go.Figure(layout=layoutF)
+
+    if modo:
+        # ya recibe simbolos
+        syms = sp.symbols(diff_var)
+        dfdx = sp.lambdify(sp.symbols(diff_var[0]),sp.diff(f, diff_var[0]),'numpy')
+        F = sp.lambdify(sp.symbols(diff_var[0]),sp.integrate(f, diff_var[0]),'numpy')
+        f = sp.lambdify(sp.symbols(diff_var[0]), f, 'numpy')
+        
+        
+
+    xs = np.linspace(xa, xb, 600)
+    df = pd.DataFrame(
+        dict(
+            x=xs,
+            y=f(xs),
+        )
+    )
+    # rename para darle label de la variable que usa.
+    df[f'{diff_var[0]}'] = df.pop('x')
+
+    fig.update_layout(
+        margin=dict(t=16),
+    )
+
+    fig.add_trace(go.Scatter(
+        x=df.loc[:, f'{diff_var[0]}'],
+        y=F(xs),
+        marker_color=st.session_state['p_color'],
+        mode='lines',
+        line=dict(width=3)
+    ))
+    fig.add_trace(go.Scatter(
+        x=df.loc[:, f'{diff_var[0]}'],
+        y=dfdx(xs),
+        #marker_color="",
+        mode='lines',
+        line=dict(width=3)
+    ))
+    fig.add_trace(go.Scatter(
+
+        x=df.loc[:, f'{diff_var[0]}'],
+        y=df.loc[:, 'y_int'],
+        #marker_color=st.session_state['p_color'],
+        mode='lines',
+        line=dict(width=3)
+    ))
+
+    return fig
 
 '''
     xs = np.arange(-1,3,0.01)
