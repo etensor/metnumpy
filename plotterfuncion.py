@@ -180,7 +180,7 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
         marker_color=st.session_state['p_color'],
         mode='lines',
         line=dict(width=2),
-        name='F(x)',
+        name=f'F({diff_var[0]})',
 
     ))
     fig.add_trace(go.Scatter(
@@ -189,7 +189,7 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
         #marker_color="",
         mode='lines',
         line=dict(width=2),
-        name='f\'(x)',
+        name=f'f\'({diff_var})',
     ))
     fig.add_trace(go.Scatter(
         x=df.loc[:, f'{diff_var[0]}'],
@@ -197,7 +197,7 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
         #marker_color=st.session_state['p_color'],
         mode='lines',
         line=dict(width=2),
-        name='f(x)',
+        name=f'f({diff_var[0]})',
     ))
     
     #st.session_state['df_plots'] = df
