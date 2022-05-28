@@ -5,7 +5,9 @@ import math
 from mpl_toolkits.mplot3d import Axes3D
 
 def minimo_cuadrado_if():
+    
     menu_met = st.radio('Base :',('Lineal','Polinomial','Multivariante'))
+    st.text('Nota: El número de columnas de la matriz A debe ser igual al número de filas de la matriz B')
     if menu_met == 'Lineal':
         x = st.text_input('Ingrese los valores de X', value='1.21, 3.00, 5.16, 8.31, 10.21')
         y = st.text_input('Ingrese los valores de Y', value='1.69, 5.89, 4.11, 5.49, 8.65')

@@ -2,6 +2,7 @@ import streamlit as st
 from convbases.conversorbases import conversor_bases, binary64ToFloat, ieee32_to_decimal
 
 def conversor_bases_if():
+    st.markdown('Nota: Selecciona la base a la que desea y en el recuadro pon el numero deacuerdo a su base')
     menu_met = st.radio('Base :',('Decimal','Binaria','Octal', 'Hexadecimal', '32 bits', '64 bits'))
     #Bases
     if menu_met == 'Binaria':
@@ -112,22 +113,28 @@ def conversor_bases_if():
 
             if negativo == True:
                 #ptoflotante, expontente, mantisa = floatingPoint(float(decimal)*-1)
-                binario, octal, decimal, hexadecimal, bits32, bits64 = conversor_bases(numero, base, '-')
-                st.success(f'Binario: -{binario}')
-                st.success(f'Octal: -{octal}')
-                st.success(f'Decimal: -{decimal}')
-                st.success(f'Hexadecimal: -{hexadecimal}')
-                st.success(f'32 bits: {bits32}')
-                st.success(f'64 bits: {bits64}')
+                try:
+                    binario, octal, decimal, hexadecimal, bits32, bits64 = conversor_bases(numero, base, '-')
+                    st.success(f'Binario: -{binario}')
+                    st.success(f'Octal: -{octal}')
+                    st.success(f'Decimal: -{decimal}')
+                    st.success(f'Hexadecimal: -{hexadecimal}')
+                    st.success(f'32 bits: {bits32}')
+                    st.success(f'64 bits: {bits64}')
+                except:
+                    pass
             else:
-                #ptoflotante, expontente, mantisa = floatingPoint(float(decimal))
-                binario, octal, decimal, hexadecimal, bits32, bits64 = conversor_bases(numero, base, '+')
-                st.success(f'Binario: {binario}')
-                st.success(f'Octal: {octal}')
-                st.success(f'Decimal: {decimal}')
-                st.success(f'Hexadecimal: {hexadecimal}')
-                st.success(f'32 bits: {bits32}')
-                st.success(f'64 bits: {bits64}')
+                try:
+                    #ptoflotante, expontente, mantisa = floatingPoint(float(decimal))
+                    binario, octal, decimal, hexadecimal, bits32, bits64 = conversor_bases(numero, base, '+')
+                    st.success(f'Binario: {binario}')
+                    st.success(f'Octal: {octal}')
+                    st.success(f'Decimal: {decimal}')
+                    st.success(f'Hexadecimal: {hexadecimal}')
+                    st.success(f'32 bits: {bits32}')
+                    st.success(f'64 bits: {bits64}')
+                except:
+                    pass
 
             with open('css/presentacion.css') as f:
                 st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
