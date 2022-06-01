@@ -18,9 +18,8 @@ def trapecios_if():
     #fx = lambda x: x**2-2*x+3
     x = sp.symbols('x')
     # intervalo de integración
-    a = int(st.text_input('Ingrese extremo izquierdo: ',value='-5'))
-    #a = -5
-    b = int(st.text_input('Ingrese extremo derecho: ',value='10'))
+    a = parse_expr(st.text_input('Ingrese extremo izquierdo: ',value='-5'),transformations=transformations)
+    b = parse_expr(st.text_input('Ingrese extremo derecho: ',value='10'),transformations=transformations)
     #b = 10
     particiones = int(st.text_input('Ingrese numero de particiones:', value='15'))
     #tramos = 15
