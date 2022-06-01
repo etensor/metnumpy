@@ -16,8 +16,8 @@ def minimo_cuadrado_if():
         x = x.replace(" ", "")
         y = y.replace(" ", "")
 
-        x = list(map(parsearFuncion,x.split(',')))
-        y = list(map(parsearFuncion,y.split(',')))
+        x = list(map(float(parsearFuncion),x.split(',')))
+        y = list(map(float(parsearFuncion),y.split(',')))
 
         if len(x) == len(y):
             for i in range(0, len(x)):
