@@ -16,14 +16,14 @@ def minimo_cuadrado_if():
         x = x.replace(" ", "")
         y = y.replace(" ", "")
 
-        x = list(map(float(parsearFuncion),x.split(',')))
-        y = list(map(float(parsearFuncion),y.split(',')))
+        x = x.split(',')
+        y = y.split(',')
 
         if len(x) == len(y):
             for i in range(0, len(x)):
-                x[i] = float(x[i])
+                x[i] = float(parsearFuncion(x[i]))
             for i in range(0, len(y)):
-                y[i] = float(y[i])
+                y[i] = float(parsearFuncion(y[i]))
                 
             parameter = liner_fitting(x,y)
             draw_data = calculate(x,parameter[0],parameter[1])
