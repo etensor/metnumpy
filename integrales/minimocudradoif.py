@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from pylab import mpl
 import math
 from mpl_toolkits.mplot3d import Axes3D
+from derivadas.derivadas import parsearFuncion
 
 def minimo_cuadrado_if():
     
@@ -15,8 +16,8 @@ def minimo_cuadrado_if():
         x = x.replace(" ", "")
         y = y.replace(" ", "")
 
-        x = x.split(',')
-        y = y.split(',')
+        x = list(map(parsearFuncion,x.split(',')))
+        y = list(map(parsearFuncion,y.split(',')))
 
         if len(x) == len(y):
             for i in range(0, len(x)):
