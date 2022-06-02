@@ -74,6 +74,13 @@ def plotter_principal(): # streamlit componente
     try:
         if sola:
             graficador(eq_funcion, variables_f)
+            with st.expander('Raices:'):
+                # le agregué esto para conocer sus raices de una.
+                try:
+                    st.latex(
+                    'x_r \;='+sp.latex(sp.solveset(parsearFuncion(eq_funcion), sp.symbols(variables_f))))
+                except:
+                    pass
         else:
             graficador_3(eq_funcion, variables_f)
     except:
@@ -166,10 +173,8 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
 
     return fig
 
-    #return fig
 
 
-# funciona unicamente 2D]
 
 def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=True, auto_fondo=True, idx=0):
 
@@ -241,42 +246,3 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
     #st.session_state['df_plots'] = df
 
     return fig
-
-'''
-    xs = np.arange(-1,3,0.01)
-    # Add traces, one for each slider step
-    for step in np.arange(-2, 2, 0.1):
-        fig.add_trace(
-            go.Scatter(
-                visible=False,
-                line=dict(color="#0dc40c", width=3),
-                name="𝜈 = " + str(step),
-                x=np.arange(-10, 10, 0.01),
-                y=f(step * xs)))
-
-    # Make 10th trace visible
-    fig.data[10].visible = True
-
-    # Create and add slider
-    steps = []
-    for i in range(len(fig.data)):
-        step = dict(
-            method="update",
-            args=[{"visible": [False] * len(fig.data)}]#,
-                #{"title": "Slider switched to step: " + str(i)}],  # layout attribute
-        )
-        step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
-        steps.append(step)
-
-    sliders = [dict(
-        active=10,
-        currentvalue={"prefix": "Rango: "},
-        pad={"t": 50},
-        steps=steps
-    )]
-
-    fig.update_layout(
-        sliders=sliders
-    )
-
-'''
