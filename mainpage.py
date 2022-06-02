@@ -32,7 +32,7 @@ if 'lim_inf' not in st.session_state:
 st.set_page_config(
     layout="wide",
     page_title='metnumpy',
-    page_icon='⅀',
+    page_icon='🛠',
     initial_sidebar_state='expanded',
     menu_items={'About': "### Github:\n www.github.com/etensor/metnumpy"}
     )
