@@ -7,6 +7,7 @@ from integrales.falsaposicionif import falsa_posicion_if
 from derivadas.derivadadeunpolinomioif import derivada_de_un_polinomio_if
 from derivadas.biseccionif import biseccion_if
 from derivadas.secanteif import secante_if
+from derivadas.derivadas import parsearFuncion
 from integrales.trapeciosif import trapecios_if
 from integrales.simpson1by3if import simpson1by3_if
 from integrales.solidoderevolucionif import solidoderevolucion_if
@@ -83,18 +84,121 @@ with st.sidebar:  # gif epa + titulo XD
 
 opt_menu = st.sidebar.selectbox(
     "Navegador del proyecto",
-    ("Presentación","Conversor de bases", "Derivadas", "Falsa posición", "Derivada de un polinomio", "Bisección", "Trapecios", "Rectangulo", "Simpson 1/3", "Minimo cuadrado", "Solidos de revolción","Secante","Newthon Raphson","matrices")
+    ("Presentación",
+    "Conversor de bases",
+    "Ecuaciones",
+    "Integrales",
+    "Matrices"
+    )
 )
+
+menu_ecuaciones = st.sidebar.selectbox(
+    'Métodos de ecuaciones',
+    ("Derivadas",
+     "Falsa posición",
+     "Derivada de un polinomio",
+     "Newton Raphson",
+     "Secante",
+     "Bisección"
+     )) if opt_menu == 'Ecuaciones' else None
+
+
+menu_integrales = st.sidebar.selectbox(
+    'Métodos de integrales',
+    (
+        "Trapecios",
+        "Rectangulo", 
+        "Simpson 1/3",
+        "Minimo cuadrado", 
+        "Sólidos de revolución",
+    )) if opt_menu == 'Integrales' else None
+
+
+st.sidebar.markdown('---')
+
+
+if opt_menu == 'Presentación':
+    st.subheader('Presentación')
+    presentacion_if()
+
+
+if opt_menu == 'Conversor de bases':
+    st.subheader('Conversor de bases')
+    conversor_bases_if()
+
+if opt_menu in ('Ecuaciones','Integrales'):
+    eq_funcion, variables_f, _, _, col_diff=plotter_principal()
+
+
+if opt_menu == 'Ecuaciones':
+    if menu_ecuaciones == 'Derivadas':
+        st.subheader('Calculadora de Derivadas')
+        derivadas_if(eq_funcion,col_diff)
+
+    if menu_ecuaciones == 'Falsa posición':
+        st.subheader('Falsa posición')
+        falsa_posicion_if()
+
+    if menu_ecuaciones == 'Derivada de un polinomio':
+        st.subheader('Derivada de un polinomio')
+        derivada_de_un_polinomio_if()
+
+    if menu_ecuaciones == 'Bisección':
+        st.subheader('Bisección')
+        biseccion_if()
+    
+    if menu_ecuaciones == 'Secante':
+        st.subheader('Secante')
+        secante_if()
+
+    if menu_ecuaciones == 'Newthon Raphson':
+        st.subheader('Newthon Raphson')
+        netwon_st()
+
+
+if opt_menu == 'Integrales':
+    if menu_integrales == 'Trapecios':
+        st.subheader('Trapecios')
+        trapecios_if()
+
+    if menu_integrales == 'Rectangulo':
+        st.subheader('Rectangulo')
+        trapecios_if()
+
+    if menu_integrales == 'Simpson 1/3':
+        st.subheader('Simpson 1/3')
+        simpson1by3_if()
+
+    if menu_integrales == 'Minimo cuadrado':
+        st.subheader('Minimo cuadrado')
+        minimo_cuadrado_if()
+
+    if menu_integrales == 'Sólidos de revolución':
+        st.subheader('Sólidos de revolución')
+        solidoderevolucion_if()
+
+    
+
+if opt_menu == 'Matrices':
+    st.subheader('Matrices')
+    def_mtr()
+    
+
+
+
+
+
+#? config + musica en la barra de al lado
 
 with st.sidebar:
     #if st.sidebar.checkbox("Datos de la función", value=False):
-        #st.dataframe(st.session_state['df_plots'])
+    #st.dataframe(st.session_state['df_plots'])
 
     with st.expander('Configuración'):
         titulo_melo('Configuración')
         escoger_fuente()
         escoger_tema()
-    
+
     with st.expander('Música'):
         musica_file = open('extras/vivaldi-RV34_bflat.ogg', 'rb')
         sonido = musica_file.read()
@@ -102,7 +206,7 @@ with st.sidebar:
             .musc p {
                 text-align: right;
                  right; font-size: 12px;
-                }</style> <div class="musc"> <p>Vivaldi RV34 III. Largo </p> </div>''',unsafe_allow_html=True)
+                }</style> <div class="musc"> <p>Vivaldi RV34 III. Largo </p> </div>''', unsafe_allow_html=True)
         st.audio(sonido, format='audio/ogg')
         st.markdown(r'''
         <iframe width="260" height="190" 
@@ -111,70 +215,12 @@ with st.sidebar:
         autoplay; clipboard-write; encrypted-media; gyroscope; 
         picture-in-picture" allowfullscreen>
         </iframe>
-        ''',unsafe_allow_html=True)
-
-
-if opt_menu == 'Presentación':
-    st.subheader('Presentación')
-    presentacion_if()
+        ''', unsafe_allow_html=True)
 
 
 
-if opt_menu == 'Conversor de bases':
-    st.subheader('Conversor de bases')
-    conversor_bases_if()
 
-if opt_menu in ('Derivadas','Falsa posición','Derivada de un polinomio',
-    'Bisección','Trapecios','Rectangulo','Simpson 1/3', 'Minimo cuadrado', 'Solidos de revolción','Secante','Newthon Raphson'):
-    eq_funcion, variables_f, _, _, col_diff=plotter_principal()
 
-if opt_menu == 'Derivadas':
-    st.subheader('Calculadora de Derivadas')
-    derivadas_if(eq_funcion,col_diff)
 
-if opt_menu == 'Falsa posición':
-    st.subheader('Falsa posición')
-    falsa_posicion_if()
-
-if opt_menu == 'Derivada de un polinomio':
-    st.subheader('Derivada de un polinomio')
-    derivada_de_un_polinomio_if()
-
-if opt_menu == 'Bisección':
-    st.subheader('Bisección')
-    biseccion_if()
-
-if opt_menu == 'Trapecios':
-    st.subheader('Trapecios')
-    trapecios_if()
-
-if opt_menu == 'Rectangulo':
-    st.subheader('Rectangulo')
-    trapecios_if()
-
-if opt_menu == 'Simpson 1/3':
-    st.subheader('Simpson 1/3')
-    simpson1by3_if()
-
-if opt_menu == 'Minimo cuadrado':
-    st.subheader('Minimo cuadrado')
-    minimo_cuadrado_if()
-
-if opt_menu == 'Solidos de revolción':
-    st.subheader('Solidos de revolción')
-    solidoderevolucion_if()
-
-if opt_menu == 'Secante':
-    st.subheader('Secante')
-    secante_if()
-
-if opt_menu == 'Newthon Raphson':
-    st.subheader('Newthon Raphson')
-    netwon_st()
-
-if opt_menu == 'matrices':
-    st.subheader('Matrices')
-    def_mtr()
-    
 #with open('../css/presentacion.css') as f:
 #    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)

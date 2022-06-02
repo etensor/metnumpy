@@ -100,31 +100,69 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
     
     if modo:
             f = sp.lambdify(sp.symbols(diff_var), f, 'numpy')     # ya recibe simbolos
-            
-    
-    xs = np.linspace(xa, xb, 800)
-    df = pd.DataFrame(
-        dict(
-            x=xs,
-            y=f(xs)
-        )
-    )
-    # rename para darle label de la variable que usa.
-    df[f'{diff_var[0]}'] = df.pop('x')
-    
-    fig.update_layout(
-        margin=dict(t=16),
-    )
     
 
-    fig.add_trace(go.Scatter(
-        #ez:  x=t, y=np.sin(t), ...
-        x=df.loc[:, f'{diff_var[0]}'],
-        y=df.loc[:, 'y'],
-        marker_color=st.session_state['p_color'],
-        mode='lines',
-        line=dict(width=3)
-    ))
+    if len(diff_var) == 3:
+        xs = np.outer(np.linspace(xa, xb, 200), np.ones(200))
+        y = xs.copy().T
+        Z = f(xs, y)
+        fig.add_trace(go.Surface(
+            contours={
+                "x": {"show": True, "start": 1.5, "end": 2, "size": 0.03, "color": "white"},
+                "z": {"show": True, "start": 0.5, "end": 0.8, "size": 0.04}
+            },
+            x=xs,
+            y=y,
+            z=Z
+            ))
+
+        fig.update_layout(
+            scene={
+                "xaxis": {"nticks": 12},
+                "zaxis": {"nticks": 12},
+                'camera_eye': {"x": -1, "y": -1, "z": 0.5},
+                "aspectratio": {"x": 1, "y": 1, "z": 0.5}
+            })
+
+    if len(diff_var) == 5:
+        X,Y,Z =  np.mgrid[xa:xb:30j,xa:xb:30j,xa:xb:30j]
+
+        fig.add_trace(go.Volume(
+            x=X.flatten(),
+            y=Y.flatten(),
+            z=Z.flatten(),
+            value=f(X,Y,Z).flatten(),
+            isomin=0.1,
+            isomax=0.8,
+            opacity=0.35,
+            surface_count=30
+        ))
+
+
+
+    if len(diff_var) == 1:
+        xs = np.linspace(xa, xb, 650)
+        df = pd.DataFrame(
+            dict(
+                x=xs,
+                y=f(xs)
+            )
+        )
+    # rename para darle label de la variable que usa.
+        df[f'{diff_var[0]}'] = df.pop('x')
+        
+        fig.update_layout(
+            margin=dict(t=16),
+        )
+    
+        fig.add_trace(go.Scatter(
+            #ez:  x=t, y=np.sin(t), ...
+            x=df.loc[:, f'{diff_var[0]}'],
+            y=df.loc[:, 'y'],
+            marker_color=st.session_state['p_color'],
+            mode='lines',
+            line=dict(width=3)
+        ))
 
     return fig
 
