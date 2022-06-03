@@ -6,7 +6,9 @@ import pandas as pd
 import streamlit as st
 from derivadas.derivadas import funcionOriginal,parsearFuncion
 
+
 # 3D: f(x,y) =  2y*cos(x/3)sin(3x)
+
 
 x,y,z,t,w,r = sp.symbols('x y z t w r')
 
@@ -27,18 +29,25 @@ def pd_json(df):
 def graficador(eq_funcion,diff_variables):
     f_ltx = funcionOriginal(eq_funcion)
     st.latex(f'f({diff_variables})\;=\;' + f_ltx[1])
-    return st.plotly_chart(plot_funcion(f_ltx[0], diff_variables,
-                st.session_state['lim_inf'], st.session_state['lim_sup']), use_container_width=True)
+
+    return st.plotly_chart(
+        plot_funcion(f_ltx[0], diff_variables,
+                st.session_state['lim_inf'], st.session_state['lim_sup'],
+                template=st.session_state['tema_plots']), 
+                use_container_width=True)
 
 
 
 def graficador_3(eq_funcion,diff_variables):
     f_ltx = funcionOriginal(eq_funcion)
     st.latex(f'f({diff_variables})\;=\;' + f_ltx[1])
-    return st.plotly_chart(plot_funciones(f_ltx[0], diff_variables,
-                                        st.session_state['lim_inf'],
-                                        st.session_state['lim_sup']), 
-                                        use_container_width=True)
+    
+    return st.plotly_chart(
+        plot_funciones(f_ltx[0], diff_variables,
+                st.session_state['lim_inf'],
+                st.session_state['lim_sup'],
+                template=st.session_state['tema_plots']),
+                use_container_width=True)
 
 
 
@@ -52,9 +61,6 @@ def definir_limites():
 
 
 
-
-
-
 def plotter_principal(): # streamlit componente 
     col_eq, col_lims,col_ctrl = st.columns([2.5, 2, 2])
     with col_eq:
@@ -63,8 +69,11 @@ def plotter_principal(): # streamlit componente
             #'Ingrese función: ', value='cos(xy) + 3x**3*y**-3 z**2 - sin(xz)')
             'Ingrese función: ', value='cos(x/4)sin(5x)')
         variables_f = st.text_input(
-            'variables: ', value='x', help='Ingrese qué variables están en la función, separadas por coma.')
-
+            'variables: ', value='x', 
+            help='Ingrese qué variables están en la función, separadas por coma.',
+            key='variables_f'
+            )
+        
 
     with col_lims:
         st.write('\n')
@@ -74,11 +83,17 @@ def plotter_principal(): # streamlit componente
     try:
         if sola:
             graficador(eq_funcion, variables_f)
-            with st.expander('Raices:'):
-                # le agregué esto para conocer sus raices de una.
+            with st.expander('Raices y extremos:'):
+                # le agregué esto para conocer sus raices 
+                # y sus extremos locales de una.
                 try:
                     st.latex(
-                    'x_r \;='+sp.latex(sp.solveset(parsearFuncion(eq_funcion), sp.symbols(variables_f))))
+                    'x_r \;='+sp.latex(sp.solveset(parsearFuncion(eq_funcion), sp.symbols(variables_f))))  
+                    
+                    #
+                    #
+                    #
+
                 except:
                     pass
         else:
@@ -90,20 +105,27 @@ def plotter_principal(): # streamlit componente
 
 
 
-def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,auto_fondo= True,idx=0):  # funciona unicamente 2D]
 
-    c_fondo = hex_rgba(opa=128)
+
+def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,auto_fondo= True,idx=0,template='plotly_dark'): 
+
+    #c_fondo = hex_rgba(opa=128)
    
 
     layoutF = go.Layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor= 'rgba('+','.join([str(c) for c in c_fondo]) + ')' if auto_fondo else '#AAAAAA',
-        yaxis_title='f'+'\''*(idx)+f"({str(diff_var[0])})" if idx > 0 else f"f({str(diff_var[0])})",
+        paper_bgcolor='rgba(0,0,0,0.12)',#.4)',
+        #plot_bgcolor= 'rgba('+','.join([str(c) for c in c_fondo]) + ')' if auto_fondo else '#AAAAAA',
+        plot_bgcolor = st.session_state['b_color'] if auto_fondo else '#AAAAAA',
+        yaxis_title='f'+'\''*(idx)+f"({diff_var})" if idx > 0 else f"f({str(diff_var[0])})",
         xaxis_title=str(diff_var[0]),
         yaxis_titlefont=dict(size=20),
-        xaxis_titlefont=dict(size=20)
+        xaxis_titlefont=dict(size=20),
+        height=550,
+
     )
     fig = go.Figure(layout=layoutF)
+
+    fig.update_layout(template=template)
     
     if modo:
             f = sp.lambdify(sp.symbols(diff_var), f, 'numpy')     # ya recibe simbolos
@@ -115,7 +137,6 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
         Z = f(xs, y)
         fig.add_trace(go.Surface(
             contours={
-                "x": {"show": True, "start": 1.5, "end": 2, "size": 0.03, "color": "white"},
                 "z": {"show": True, "start": 0.5, "end": 0.8, "size": 0.04}
             },
             x=xs,
@@ -123,13 +144,22 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
             z=Z
             ))
 
+        fig.update_traces(
+            contours_z=dict(
+                show=True, usecolormap=True,
+                highlightcolor="seashell", 
+                project_z=True
+            ))
+
         fig.update_layout(
             scene={
                 "xaxis": {"nticks": 12},
                 "zaxis": {"nticks": 12},
+                #"yaxis": {"gridcolor": "gray"},
                 'camera_eye': {"x": -1, "y": -1, "z": 0.5},
-                "aspectratio": {"x": 1, "y": 1, "z": 0.5}
+                "aspectratio": {"x": 1, "y": 1, "z": 0.5},
             })
+
 
     if len(diff_var) == 5:
         X,Y,Z =  np.mgrid[xa:xb:30j,xa:xb:30j,xa:xb:30j]
@@ -176,19 +206,22 @@ def plot_funcion(f,diff_var=['x'],xa : float =-8.0,xb: float = 8.0,modo=True,aut
 
 
 
-def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=True, auto_fondo=True, idx=0):
+def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=True, auto_fondo=True, idx=0,template='plotly_dark'):
 
     c_fondo = hex_rgba(opa=128)
 
     layoutF = go.Layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba('+','.join([str(c) for c in c_fondo]
-                                      ) + ')' if auto_fondo else '#AAAAAA',
+        paper_bgcolor='rgba(0,0,0,0.12)',
+        #plot_bgcolor='rgba('+','.join([str(c) for c in c_fondo]
+        #                              ) + ')' if auto_fondo else '#AAAAAA',
+        plot_bgcolor= st.session_state['b_color'] if auto_fondo else '#AAAAAA',
         xaxis_title=str(diff_var[0]),
         yaxis_titlefont=dict(size=20),
         xaxis_titlefont=dict(size=20)
     )
     fig = go.Figure(layout=layoutF)
+
+    fig.update_layout(template=template)
 
     if modo:
         # ya recibe simbolos

@@ -17,7 +17,7 @@ def funcionOriginal(f):
 
 #  Retorna la derivada como expresión y como resultado
 def derivarFuncion(f, *argums):
-    f = parse_expr(f,transformations= transformations)
+    f = parsearFuncion(f)
     dfdxn = sp.Derivative(f, *argums)
     return dfdxn, dfdxn.doit()
 
@@ -27,7 +27,7 @@ def derivarFuncion(f, *argums):
 def derivadasFuncion(f,*args):
     return [derivarFuncion(f, (args[0],i)) for i in range(1, 4)] \
         if len(args) == 1 else \
-        [derivarFuncion(f, *args[0:i+1]) for i in range(len(args))]
+        [derivarFuncion(f, *sp.symbols(args[0:i+1])) for i in range(len(args))]
 
 
 def integrarFuncion(f, *args):

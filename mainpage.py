@@ -23,6 +23,8 @@ from plotterfuncion import plotter_principal,pd_json
 
 if 'fuente' not in st.session_state:
     st.session_state['fuente'] = '"sans serif"'
+    st.session_state['tema_plots'] = 'plotly_dark'
+    st.session_state['variables_f'] = ['x']
 
 if 'lim_inf' not in st.session_state:    
     st.session_state['lim_inf'] = -5
@@ -198,7 +200,17 @@ with st.sidebar:
     with st.expander('Configuración'):
         titulo_melo('Configuración')
         escoger_fuente()
+        st.markdown('---')
+        st.radio(
+            'Tema de los gráficos',
+            ('plotly_dark', 'ggplot2', 'seaborn','presentation'),
+            key='tema_plots',
+            help='Cambie aquí como se ven las gráficas, \
+                se ve más el cambio en superficies y volumenes 3D.'
+            )
+        st.markdown('---')
         escoger_tema()
+        
 
     with st.expander('Música'):
         musica_file = open('extras/vivaldi-RV34_bflat.ogg', 'rb')

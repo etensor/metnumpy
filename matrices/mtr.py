@@ -61,6 +61,7 @@ def crear_matriz(sym : str ='A'):
 
 
 def def_mtr(n=1,m=0):
+    lineal_o_no = True
 
     opcion = st.selectbox('Seleccione una opción', 
     [
@@ -80,7 +81,34 @@ def def_mtr(n=1,m=0):
         lambda x,y: x*y
         ]
     
-    input_matriz = st.radio('Como inrgesar la matriz',
+    if opcion == 'Sistemas de Ecuaciones':
+        lineal_o_no = st.checkbox('¿Es un sistema lineal?', 
+            value=True,help='Si el sistema no es lineal, se ingresa distinto.')
+
+
+    if not lineal_o_no:
+        num_e,vars_s = st.columns(2)
+        with num_e:
+            n_ecuaciones = st.number_input('Ingrese el número de ecuaciones',
+            min_value=0,max_value=8,value=2)
+        with vars_s:  
+            variables = sp.symbols(st.text_input('Ingrese las variables', 'x,y',
+            help='Separadas por coma, las variables en el sistema.'))
+        ecuaciones = [0 for i in range(n_ecuaciones)]
+        ejemplo_sistema = ['xy-1', ' 4*x**2 + y**2 - 5']
+
+        for i in range(n_ecuaciones):
+            ecuaciones[i] = parsearFuncion(st.text_input(f'Ingrese la ecuación {i+1}',
+            value=ejemplo_sistema[i] if n_ecuaciones == 2 else ecuaciones[i]))
+        
+        st.markdown('---')
+        st.markdown('Solución:')
+        st.latex(sp.latex(sp.Matrix(variables))+'\enskip = \enskip'+sp.latex(sp.nonlinsolve(ecuaciones,variables)))
+        
+        return
+    
+    
+    input_matriz = st.radio('Cómo ingresar la matriz',
         ('Ingresar manualmente','Ingresar desde una lista')
     )
 
@@ -125,38 +153,6 @@ def def_mtr(n=1,m=0):
             A_col.latex(tex_mtr(mtr_A))
             B_col.latex(tex_mtr(mtr_B, 'B'))
         
-
-    else:
-        st.markdown('---')
-        st.markdown('Sistema:')
-        syms_dims = sp.symbols(','.join([f'x_{i+1}' for i in range(A.shape[1])]))
-        st.latex('Ax\;=\;b')
-        st.latex(sp.latex(A*sp.Matrix(syms_dims)) +\
-            '\enskip = \enskip '+sp.latex(B))
-        
-        metodo = st.selectbox('Cómo quiere resolver el sistema',
-            ['Solución y ya','Gauss Jordan','Factorización LU'])
-        
-        if metodo == 'Solución y ya':
-            st.latex('x \enskip = \enskip ' + sp.latex(sp.linsolve((A, B), syms_dims)))
-        
-        if metodo == 'Gauss Jordan':
-            st.latex('x\;=\;A^{-1}b')
-            try:
-                sols = A.gauss_jordan_solve(B)
-                st.latex('x \; = \;' + sp.latex(A.inv()*B))
-                if sols[1].shape[0] != 0:
-                    st.latex('x \; = \;'+sp.latex(sols))
-            except:
-                st.error('Matriz no invertible')
-            
-        if metodo == 'Factorización LU':  
-            try:
-                st.latex(f'x = {sp.latex(A.LUsolve(B))}')
-            except:
-                st.error('Matriz no invertible')
-
-
 
 
     if opcion == 'Sumar matrices':
@@ -285,19 +281,40 @@ def def_mtr(n=1,m=0):
             ''')
 
 
-#def def_mtr():
-#    #dims = int(st.text_input('Dimensiones matriz n x n '),value='3')
-#    dims = int(input('dimensiones matriz n x n '))
-#
-#    nums = [x for x in range(9)]
-#    mtr = np.array(nums).reshape((3,3))
-#    mtr2 = np.array(nums[::-1]).reshape((3,3))
-#    print(mtr, mtr2, sep='\n\n')
-#    mul = mtr*mtr2
-#    mul_2 = np.matmul(mtr,mtr2,)
-#    suma = mtr+mtr2
-#    print(f'mul: {mul}\n,{mul_2},\n{suma}')
-#
-#
-#
-#def_mtr()
+def resolver_sistema(A,B):
+    st.markdown('---')
+    st.markdown('Sistema:')
+    syms_dims = sp.symbols(
+        ','.join([f'x_{i+1}' for i in range(A.shape[1])]))
+    st.latex('Ax\;=\;b')
+    st.latex(sp.latex(A*sp.Matrix(syms_dims)) +
+            '\enskip = \enskip '+sp.latex(B))
+
+    metodo = st.selectbox('Cómo quiere resolver el sistema',
+                            ['Solución y ya', 'Gauss Jordan', 'Factorización LU'])
+
+    if metodo == 'Solución y ya':
+        st.latex('x \enskip = \enskip ' +
+                    sp.latex(sp.linsolve((A, B), syms_dims)))
+
+    if metodo == 'Gauss Jordan':
+        st.latex('x\;=\;A^{-1}b')
+        try:
+            sols = A.gauss_jordan_solve(B)
+            st.latex('x \; = \;' + sp.latex(A.inv()*B))
+            if sols[1].shape[0] != 0:
+                st.latex('x \; = \;'+sp.latex(sols))
+        except:
+            st.error('Matriz no invertible')
+
+    if metodo == 'Factorización LU':
+        try:
+            st.latex(f'x = {sp.latex(A.LUsolve(B))}')
+        except:
+            st.error('Matriz no invertible')
+
+
+
+
+
+
