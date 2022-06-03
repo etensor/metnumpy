@@ -24,7 +24,7 @@ from plotterfuncion import plotter_principal,pd_json
 if 'fuente' not in st.session_state:
     st.session_state['fuente'] = '"sans serif"'
     st.session_state['tema_plots'] = 'plotly_dark'
-    st.session_state['variables_f'] = ['x']
+    st.session_state['variables_f'] = 'x'
 
 if 'lim_inf' not in st.session_state:    
     st.session_state['lim_inf'] = -5
@@ -122,6 +122,7 @@ st.sidebar.markdown('---')
 
 if opt_menu == 'Presentación':
     st.subheader('Presentación')
+    st.write('Proyecto de métodos numéricos con Walter Magaña.')
     presentacion_if()
 
 
