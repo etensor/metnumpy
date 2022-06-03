@@ -2,6 +2,7 @@ import sympy as sp
 from sympy.parsing.sympy_parser import (implicit_multiplication_application,
                                         parse_expr, standard_transformations)
 
+from streamlit import session_state
 # Las derivadas pimpam con parser para escribirlas sin cuento
 
 x, y, z = sp.symbols('x y z')
@@ -25,9 +26,16 @@ def derivarFuncion(f, *argums):
 #   Retorna las primeras 3 derivadas de la funcion sobre un único primer argumento
 #   o las derivadas parciales en orden consecutivo
 def derivadasFuncion(f,*args):
-    return [derivarFuncion(f, (args[0],i)) for i in range(1, 4)] \
-        if len(args) == 1 else \
-        [derivarFuncion(f, *sp.symbols(args[0:i+1])) for i in range(len(args))]
+    if len(args) == 1 and len(session_state['variables_f']) == 1:
+        return [derivarFuncion(f, (args[0], i)) for i in range(1, 4)]
+    else:
+        return [derivarFuncion(f, *sp.symbols(args[0:i+1])) for i in range(len(args))]
+
+    #creo que menos pasos...
+    
+    #return [derivarFuncion(f, (args[0],i)) for i in range(1, 4)] \
+    #    if len(args) == 1 and len(session_state['variables_f']) == 1 else \
+    #    [derivarFuncion(f, *sp.symbols(args[0:i+1])) for i in range(len(args))]
 
 
 def integrarFuncion(f, *args):
