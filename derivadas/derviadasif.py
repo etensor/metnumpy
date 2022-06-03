@@ -4,7 +4,6 @@ from plotterfuncion import plot_funcion,graficador,definir_limites,plotter_princ
 
 def derivadas_if(eq_funcion,col_diff):
     calc_derivadas = st.container()
-    varias_var = False
 
     with calc_derivadas:
         #eq_funcion,variables_f,_,_,col_diff = plotter_principal()
@@ -25,7 +24,6 @@ def derivadas_if(eq_funcion,col_diff):
                     value='x,x,y',
                     help='x,x,z <-- derivará 2 veces en x y una vez en z')
                 diff_variables = diff_variables.split(',')
-                varias_var = True
 
         st.write('\n')
          

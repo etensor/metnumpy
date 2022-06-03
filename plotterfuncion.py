@@ -83,19 +83,18 @@ def plotter_principal(): # streamlit componente
     try:
         if sola:
             graficador(eq_funcion, variables_f)
-            with st.expander('Raices y extremos:'):
-                # le agregué esto para conocer sus raices 
-                # y sus extremos locales de una.
-                try:
-                    st.latex(
-                    'x_r \;='+sp.latex(sp.solveset(parsearFuncion(eq_funcion), sp.symbols(variables_f))))  
-                    
-                    #
-                    #
-                    #
-
-                except:
-                    pass
+            if variables_f < 3:
+                with st.expander('Raices y extremos:'):
+                    # le agregué esto para conocer sus raices 
+                    # y sus extremos locales de una.
+                    try:
+                        st.latex(
+                        'x_r \;='+sp.latex(sp.solveset(parsearFuncion(eq_funcion), sp.symbols(variables_f))))        
+                        #
+                        #
+                        #
+                    except:
+                        pass
         else:
             graficador_3(eq_funcion, variables_f)
     except:
