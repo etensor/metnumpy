@@ -26,7 +26,10 @@ def presentacion_if():
             allow="accelerometer; autoplay; clipboard-write;
              encrypted-media; gyroscope; 
              picture-in-picture" allowfullscreen>
-        </iframe>''',unsafe_allow_html=True)    
+        </iframe>''',unsafe_allow_html=True)
+
+        st.info('El graficador recibe hasta funciones $f(x,y,z)$, \
+            no paramétricas. Para funciones complejas usar: $f(z)$.')
 
 
     st.write('\n')

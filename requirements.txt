@@ -12,3 +12,4 @@ jinja2
 plotly
 toml
 pyparsing
+cplot
