@@ -1,7 +1,7 @@
 # metnumpy
 Proyecto de métodos númericos con W. Magaña.
 
-[live](https://share.streamlit.io/etensor/metnumpy/main/mainpage.py)
+[!](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)(https://share.streamlit.io/etensor/metnumpy/main/mainpage.py)
 
 
 
