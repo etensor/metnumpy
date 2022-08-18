@@ -153,33 +153,33 @@ def def_mtr(n=1,m=0):
             A_col.latex(tex_mtr(mtr_A))
             B_col.latex(tex_mtr(mtr_B, 'B'))
         
-
-
-    if opcion == 'Sumar matrices':
-        st.subheader('Sumar matrices')
-        if B.shape[1] != A.shape[0] or B.shape[0] != A.shape[1]:
-            st.error('Las dimensiones de las matrices no coinciden')
-            pass
-        else:
-            st.latex('A+B \enskip = \enskip '+sp.latex(operaciones[0](A, B)))
-
-    if opcion == 'Restar matrices':
-        st.subheader('Restar matrices')
-        if B.shape[1] != A.shape[0] or B.shape[0] != A.shape[1]:
-            st.error('Las dimensiones de las matrices no coinciden')
-            pass
-        else:
-            st.latex('A-B \enskip = \enskip '+sp.latex(operaciones[1](A, B)))
     
-    if opcion == 'Multiplicar matrices':
-        st.subheader('Multiplicar matrices')
-        if B.shape[0] != A.shape[1]:
+    opts = {
+        'Sumar matrices':(0,'+'),
+        'Restar matrices':(1,'-'), 
+        'Multiplicar matrices':(2,"\cdot")}
+
+
+    st.subheader(f'{opcion}')
+    # refactoring made this more ilegible than it was before
+    # but it's more efficient now, so it's worth it
+
+
+    if opcion in opts.keys():
+        dbool = bool(opcion == 'Multiplicar matrices')
+        if (dbool and B.shape[1] != A.shape[0]):
+            st.error('Las dimensiones de las matrices no coinciden')
+            pass
+        elif not dbool and B.shape[0] != A.shape[1]:
             st.error('Las dimensiones de las matrices no coinciden')
             pass
         else:
-            st.latex('A \cdot B \enskip = \enskip '+sp.latex(operaciones[2](A, B)))
-    
+            st.latex(f'A {opts[opcion][1]} B \enskip = \enskip ' \
+            +  sp.latex(operaciones[opts[opcion][0]](A, B))
+            )
 
+        
+    
     if opcion == 'Determinante e Inversa':
 
         st.subheader('Inversa')

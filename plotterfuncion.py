@@ -42,8 +42,8 @@ def graficador(eq_funcion,diff_variables):
         return st.plotly_chart(
             plot_funcion(f_ltx[0], diff_variables,
                     st.session_state['lim_inf'], st.session_state['lim_sup'],
-                    template=st.session_state['tema_plots']), 
-                    use_container_width=True)
+                    template=st.session_state['tema_plots']),
+            use_container_width=True)
     else:
         return st.pyplot(plot_funcion(
                     f_ltx[0], 
@@ -108,12 +108,12 @@ def plotter_principal(): # streamlit componente
         variables_f = st.text_input(
             'Variables: ', value='x', 
             help=r'Ingrese qué variables están en la función, separadas por coma. \
-                Si la función es compleja, espera como argumento $z$. La variable imaginaria $i$ que espera es $j$.',
+                Si la función es compleja, espera como argumento $z$. La unidad imaginaria $i$ que espera es $j$.',
             key='variables_f'
-            )
+            ).replace(' ','')
         
 
-    with col_lims:
+    with col_lims: 
         st.write('\n')
         definir_limites()
         sola = st.checkbox('Gráfica sola', value=True,help='Con integral y derivada')
@@ -142,7 +142,19 @@ def plotter_principal(): # streamlit componente
                                     sp.symbols(variables_f),
                                     domain=sp.S.Reals if variables_f != 'z' else sp.S.Complexes,
                         )))   
-                        #
+                        
+                        # Singularidades tambien son importantes de indagar
+                        #   sobretodo si f: C -> C
+
+                        st.latex(
+                            r'\text{Singularidades en}\;:\;'+\
+                            sp.latex(\
+                                sp.singularities(
+                                    parsearFuncion(eq_funcion),
+                                    sp.symbols(variables_f))
+                                )
+                        )
+
 
                     except:
                         pass
@@ -391,14 +403,16 @@ def plot_funciones(f, diff_var=['x'], xa: float = -8.0, xb: float = 8.0, modo=Tr
             margin=dict(t=16),
         )
 
-        for func_x in funciones:
+        fs = ['f', r"f'", 'F']
+
+        for idx,func_x in enumerate(funciones):
             fig.add_trace(go.Scatter(
                 x=xs,
                 y=func_x,
                 #marker_color=st.session_state['p_color'],
                 mode='lines',
                 line=dict(width=2),
-                name=f'F({diff_var[0]})',
+                name=f"{fs[idx]}({diff_var[0]})",
             ))
 
     #st.session_state['df_plots'] = df

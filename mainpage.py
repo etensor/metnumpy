@@ -1,4 +1,3 @@
-from pyparsing import Opt
 import streamlit as st
 from presentacionif import presentacion_if
 from convbases.conversorbasesif import conversor_bases_if
@@ -17,6 +16,9 @@ from integrales.minimocudradoif import minimo_cuadrado_if
 
 from estilos import escoger_tema,escoger_fuente,titulo_melo,titulo_melo2,config_actual
 from plotterfuncion import plotter_principal,pd_json
+from extras.materialst import probando_elements
+
+
 
 
 ###     ? Configuracion de la app
@@ -90,9 +92,26 @@ opt_menu = st.sidebar.selectbox(
     "Conversor de bases",
     "Ecuaciones",
     "Integrales",
-    "Matrices"
+    "Matrices",
+    "En desarollo"
     )
 )
+
+#st.sidebar.markdown(r'''
+#
+#    <script>
+#    var loadpy = document.createElement("div");
+#    loadpy.innerHTML += "<link rel='stylesheet' href='https://pyscript.net/alpha/pyscript.css' />";
+#    loadpy.innerHTML += "<script defer src='https://pyscript.net/alpha/pyscript.js' />";
+#
+#    document.body.appendChild(loadpy);
+#    </script>
+#
+#    <py-repl>
+#    </py-repl>
+#
+#''',unsafe_allow_html=True)
+
 
 menu_ecuaciones = st.sidebar.selectbox(
     'Métodos de ecuaciones',
@@ -187,7 +206,10 @@ if opt_menu == 'Matrices':
     def_mtr()
     
 
-
+if opt_menu == 'En desarollo':
+    st.subheader('En desarollo')
+    probando_elements()
+    
 
 
 
