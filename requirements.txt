@@ -13,3 +13,4 @@ plotly
 toml
 pyparsing
 cplot
+streamlit-elements

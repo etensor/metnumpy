@@ -16,7 +16,7 @@ from integrales.minimocudradoif import minimo_cuadrado_if
 
 from estilos import escoger_tema,escoger_fuente,titulo_melo,titulo_melo2,config_actual
 from plotterfuncion import plotter_principal,pd_json
-#from extras.materialst import probando_elements
+from extras.materialst import probando_elements
 
 
 
@@ -206,9 +206,9 @@ if opt_menu == 'Matrices':
     def_mtr()
     
 
-#if opt_menu == 'En desarollo':
-#    st.subheader('En desarollo')
-#    probando_elements()
+if opt_menu == 'En desarollo':
+    st.subheader('En desarollo')
+    probando_elements()
     
 
 
