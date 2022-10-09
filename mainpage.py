@@ -20,7 +20,6 @@ from extras.materialst import probando_elements
 
 
 
-
 ###     ? Configuracion de la app
 
 if 'fuente' not in st.session_state:
@@ -209,7 +208,6 @@ if opt_menu == 'Matrices':
 if opt_menu == 'En desarollo':
     st.subheader('En desarollo')
     probando_elements()
-    
 
 
 

@@ -44,16 +44,14 @@ def graficador(eq_funcion, diff_variables):
         return st.plotly_chart(
             plot_funcion(f_ltx[0], diff_variables,
                     st.session_state['lim_inf'], st.session_state['lim_sup'],
-                    template=st.session_state['tema_plots']),
-            use_container_width=True)
+                    template=st.session_state['tema_plots']))
     else:
         return st.pyplot(plot_funcion(
                     f_ltx[0],
                     diff_variables,
                     st.session_state['lim_inf'],
                     st.session_state['lim_sup'],
-                    ),
-                use_container_width=True)
+                    ))
 
 
 def graficador_3(eq_funcion, diff_variables):
@@ -64,8 +62,7 @@ def graficador_3(eq_funcion, diff_variables):
         plot_funciones(f_ltx[0], diff_variables,
                 st.session_state['lim_inf'],
                 st.session_state['lim_sup'],
-                template=st.session_state['tema_plots']),
-                use_container_width=True)
+                template=st.session_state['tema_plots']))
 
 
 def graficador_complex(eq_funcion):

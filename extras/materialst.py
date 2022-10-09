@@ -4,10 +4,13 @@ from streamlit_elements import mui,html,elements,dashboard,event,media,editor
 # material.ui inside streamlit is amazing.
 
 
-def probando_elements():
+def probando_dashboard():
     with elements("dashboard"):
         layout = [
-            # Parameters: element_identifier, x_pos, y_pos, width, height, [item properties...]
+            # Parameters: element_identifier, 
+            #             x_pos, y_pos, 
+            #             width, height, [item properties...]
+
             dashboard.Item("first_item", 0, 0, 2, 2),
             dashboard.Item("second_item", 2, 0, 2, 2,
                            isDraggable=False, moved=False),
@@ -23,20 +26,16 @@ def probando_elements():
             mui.Paper("Third item (cannot resize)", key="third_item")
 
 
+def probando_elements():
+    with elements("dashboard"):
+        layout = [dashboard.Item(f"item{i}", i/2, i, 2, 1) for i in range(4)]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        with dashboard.Grid(layout):
+            for i in range(len(layout)):
+                mui.Paper(f"Item {i}", key=f"item{i}")
+    
+                
+    
 
 
 
