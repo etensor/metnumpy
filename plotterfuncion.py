@@ -44,7 +44,8 @@ def graficador(eq_funcion, diff_variables):
         return st.plotly_chart(
             plot_funcion(f_ltx[0], diff_variables,
                     st.session_state['lim_inf'], st.session_state['lim_sup'],
-                    template=st.session_state['tema_plots']))
+                    template=st.session_state['tema_plots']),
+                    use_container_width=True)
     else:
         return st.pyplot(plot_funcion(
                     f_ltx[0],
@@ -62,7 +63,8 @@ def graficador_3(eq_funcion, diff_variables):
         plot_funciones(f_ltx[0], diff_variables,
                 st.session_state['lim_inf'],
                 st.session_state['lim_sup'],
-                template=st.session_state['tema_plots']))
+                template=st.session_state['tema_plots']),
+                use_container_width=True)
 
 
 def graficador_complex(eq_funcion):
@@ -117,8 +119,11 @@ def plotter_principal():  # streamlit componente
         st.write('\n')
         definir_limites()
         sola = st.checkbox('Gráfica sola', value=True,
-                           help='Con integral y derivada')
-        if not sola:
+                           help='Con integral y derivada') \
+                if variables_f != 'z' else True
+
+
+        if not sola and len(variables_f) != 1:
             st.checkbox('Vertical', value=False,
                 help="Agrupar gráficas en modo vertical o horizontal.\
                     No recomendado en modo móvil.",
